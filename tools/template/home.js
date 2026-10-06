@@ -9,7 +9,7 @@ const ICONS = {
 const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.8 1.4 7L12 17.7 5.8 21.2l1.4-7L2 9.4l7-.8z"/></svg>';
 const FLAG = '<span class="ph-flag">Platzhalter</span>';
 
-module.exports = function home({ r, LIST, REFS, START, esc, serviceCards, stepsList, ctaBand, refCard }) {
+module.exports = function home({ r, LIST, REFS, START, HERO_VIDEO, esc, serviceCards, stepsList, ctaBand, refCard }) {
   const preview = ['innenrenovierung', 'fassade-waermedaemmung', 'dacharbeiten', 'fliesen-bodenbelag']
     .map(id => LIST.find(s => s.id === id)).filter(Boolean);
   const byId = Object.fromEntries(LIST.map(s => [s.id, s]));
@@ -39,7 +39,9 @@ module.exports = function home({ r, LIST, REFS, START, esc, serviceCards, stepsL
         </figure>`;
   }).join('');
 
-  return `<section class="hero" aria-labelledby="hero-title">
+  const video = HERO_VIDEO ? `<video class="hero-video" autoplay muted loop playsinline preload="metadata"${HERO_VIDEO.poster ? ` poster="${r}${HERO_VIDEO.poster}"` : ''} aria-hidden="true" tabindex="-1"><source src="${r}${HERO_VIDEO.src}" type="video/mp4"></video><div class="hero__overlay" aria-hidden="true"></div>` : '';
+
+  return `<section class="hero${HERO_VIDEO ? ' hero--video' : ''}" aria-labelledby="hero-title">${video}
     <div class="container hero__inner">
       <div class="hero__text">
         <span class="hero__eyebrow">Renovierung &amp; Ausbau in Österreich</span>

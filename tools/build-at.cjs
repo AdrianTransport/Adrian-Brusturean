@@ -24,6 +24,11 @@ const LIST = sandbox.window.ANADRI_LEISTUNGEN;
 const EMAIL = sandbox.window.ANADRI_EMAIL;
 const REFS = JSON.parse(fs.readFileSync(path.join(__dirname, 'referenzen.json'), 'utf8'));
 const START = JSON.parse(fs.readFileSync(path.join(__dirname, 'startseite.json'), 'utf8'));
+
+// Hero-Video: wird nur eingebaut, wenn at/assets/hero-images/hero.mp4 vorhanden ist (optional hero.jpg als Poster).
+const HERO_VIDEO = fs.existsSync(path.join(AT, 'assets/hero-images/hero.mp4'))
+  ? { src: 'assets/hero-images/hero.mp4', poster: fs.existsSync(path.join(AT, 'assets/hero-images/hero.jpg')) ? 'assets/hero-images/hero.jpg' : null }
+  : null;
 const byId = Object.fromEntries(LIST.map(s => [s.id, s]));
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -227,7 +232,7 @@ pages['index.html'] = layout({
   depth: 0, active: '',
   title: 'ANADRI — Renovierung & Ausbau in Österreich mit klaren Preisen',
   description: 'Abbruch, Innenrenovierung, Fassade, Dach, Elektro, Sanitär, Maler, Trockenbau und Fliesen in Österreich. Richtpreise online berechnen, kostenlose Besichtigung.',
-  body: home({ r: './', LIST, REFS, START, esc, serviceCards, stepsList, ctaBand, refCard })
+  body: home({ r: './', LIST, REFS, START, HERO_VIDEO, esc, serviceCards, stepsList, ctaBand, refCard })
 });
 
 pages['kalkulator/index.html'] = layout({

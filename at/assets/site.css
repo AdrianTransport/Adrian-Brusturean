@@ -364,3 +364,12 @@ main > .section{padding:40px 0}
   .trust__grid--numbers b{font-size:2.3em}
 }
 @media(min-width:1024px){ .why-grid,.quotes{grid-template-columns:repeat(4,1fr)} }
+
+/* ---------- Hero-Video (nur wenn assets/hero-images/hero.mp4 vorhanden) ---------- */
+.hero--video{position:relative;overflow:hidden;min-height:300px;display:flex;align-items:center}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;background:#1a1a1a;z-index:0}
+.hero__overlay{position:absolute;inset:0;z-index:0;background:linear-gradient(135deg,rgba(26,26,26,.88) 0%,rgba(36,21,26,.78) 55%,rgba(58,15,26,.7) 100%)}
+.hero--video .hero__inner{position:relative;z-index:1;width:100%}
+@media(min-width:421px){ .hero--video{min-height:400px} }
+@media(min-width:769px){ .hero--video{min-height:600px} }
+@media(prefers-reduced-motion:reduce){ .hero-video{display:none} }
