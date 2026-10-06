@@ -115,6 +115,7 @@ ${body}
 </footer>
 ${scripts.map(s => `<script src="${r}assets/${s}"></script>`).join('\n')}
 <script src="${r}assets/nav.js"></script>
+<script src="${r}assets/spargere.js"></script>
 </body>
 </html>
 `;
