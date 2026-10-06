@@ -16,6 +16,22 @@
     header.querySelectorAll('.main-nav a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
   }
 
+  // Karte erst nach Klick laden (keine Datenübertragung an OpenStreetMap ohne Zustimmung)
+  document.querySelectorAll('[data-map]').forEach(function (map) {
+    var btn = map.querySelector('[data-map-load]');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var frame = document.createElement('iframe');
+      frame.src = map.getAttribute('data-src');
+      frame.title = map.getAttribute('data-title') || 'Karte';
+      frame.loading = 'lazy';
+      frame.referrerPolicy = 'no-referrer';
+      map.innerHTML = '';
+      map.appendChild(frame);
+      map.classList.add('is-loaded');
+    });
+  });
+
   var params = new URLSearchParams(location.search);
   document.querySelectorAll('form[data-formsubmit]').forEach(function (form) {
     var next = form.querySelector('input[name="_next"]');

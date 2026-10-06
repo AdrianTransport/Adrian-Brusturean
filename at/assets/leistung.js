@@ -1,5 +1,5 @@
 // Rechner auf einer Leistungsseite: eine Leistung, eine Fläche.
-// Der Versand der Schätzung passiert im Preisrechner, mit dieser Leistung vorausgewählt.
+// Der Versand der Schätzung passiert im Kalkulator, mit dieser Leistung vorausgewählt.
 (function () {
   var root = document.querySelector('[data-leistung]');
   if (!root) return;
@@ -29,7 +29,7 @@
       $('[data-range]').textContent = eur(area * s.min) + ' – ' + eur(area * s.max);
       $('[data-margin]').textContent = eur(total * (1 - MARGIN)) + ' – ' + eur(total * (1 + MARGIN));
     }
-    $('[data-cta]').href = '../?leistung=' + encodeURIComponent(s.id) +
+    $('[data-cta]').href = '../../kalkulator/?service=' + encodeURIComponent(s.id) +
       (area ? '&flaeche=' + encodeURIComponent(String(area)) : '') + '#ergebnis';
   }
 

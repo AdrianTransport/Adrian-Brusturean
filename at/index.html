@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ANADRI Preisrechner — Renovierungskosten in Österreich</title>
-<meta name="description" content="Unverbindliche Kostenschätzung für Abbruch, Innenrenovierung, Fassade, Dach, Elektro, Sanitär, Maler, Trockenbau und Fliesen in Österreich.">
+<title>ANADRI — Renovierung &amp; Ausbau in Österreich mit klaren Preisen</title>
+<meta name="description" content="Abbruch, Innenrenovierung, Fassade, Dach, Elektro, Sanitär, Maler, Trockenbau und Fliesen in Österreich. Richtpreise online berechnen, kostenlose Besichtigung.">
 <meta name="theme-color" content="#1a1a1a">
 <link rel="stylesheet" href="./assets/site.css">
 </head>
@@ -14,7 +14,7 @@
   <div class="container header-inner">
     <a class="brand" href="./" aria-label="ANADRI – Startseite"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#c41e3a"/><path d="M8 30 20 9l12 21h-5.2L20 18.4 13.2 30Z" fill="#fff"/><path d="M16.4 25h7.2" stroke="#fff" stroke-width="2.6"/></svg><span>ANADRI<small>Renovierung · Österreich</small></span></a>
     <nav class="main-nav" id="main-nav" aria-label="Hauptmenü">
-      <ul><li><a href="./" aria-current="page">Preisrechner</a></li><li><a href="./leistungen/">Leistungen</a></li><li><a href="./referenzen/">Referenzen</a></li><li><a href="./ablauf/">Ablauf</a></li><li><a href="./ueber-uns/">Über uns</a></li><li><a href="./kontakt/">Kontakt</a></li></ul>
+      <ul><li><a href="./leistungen/">Leistungen</a></li><li><a href="./kalkulator/">Kalkulator</a></li><li><a href="./referenzen/">Referenzen</a></li><li><a href="./ablauf/">Ablauf</a></li><li><a href="./uber-uns/">Über uns</a></li><li><a href="./kontakt/">Kontakt</a></li></ul>
       <a class="btn btn--red nav-cta" href="./kontakt/">Besichtigung anfragen</a>
     </nav>
     <div class="lang" aria-label="Sprache"><a href="./../ro/" hreflang="ro" lang="ro" title="Versiunea în limba română">RO</a><span aria-current="true">DE</span></div>
@@ -22,138 +22,169 @@
   </div>
 </header>
 <main id="inhalt">
-<div class="container page-head">
-    <h1>ANADRI Preisrechner</h1>
-    <p class="lead">Erhalten Sie eine unverbindliche Kostenschätzung für Ihr Renovierungsprojekt</p>
-  </div>
-  <div class="container">
-    <div class="rechner">
-      <section class="card" aria-labelledby="input-title">
-        <h2 id="input-title">Projektdetails eingeben</h2>
-        <p class="hint">Wählen Sie die gewünschten Arbeiten und geben Sie jeweils die Fläche ein. Preise pro m², nur Arbeitsleistung.</p>
-        <div id="services"></div>
-      </section>
-
-      <section class="calc" id="ergebnis" aria-labelledby="result-title">
-        <div class="calc__head"><div class="calc__label" id="result-title">Kostenschätzung</div><span class="badge">Unverbindlich</span></div>
-        <p class="calc__top">Richtpreise nur für Arbeitsleistung – Material nicht enthalten.</p>
-        <p class="sent" data-sent role="status" hidden><b>Vielen Dank!</b> Ihre Schätzung ist bei uns angekommen. Wir kontaktieren Sie in Kürze mit einem detaillierten Angebot.</p>
-        <div aria-live="polite">
-          <p class="calc__empty" id="empty">Wählen Sie mindestens eine Leistung aus, um eine Schätzung zu sehen</p>
-          <div id="result" hidden>
-            <div class="calc__value" id="total">0 €</div>
-            <p class="calc__sub">Mittelwert der Richtpreise</p>
-            <p class="calc__range">Spannweite: <b id="range">0 € – 0 €</b></p>
-            <div class="margin-box"><div>Mit Verhandlungsspielraum (±10%)</div><b id="margin">0 € – 0 €</b></div>
-            <ul class="breakdown" id="breakdown"></ul>
-          </div>
+<section class="hero" aria-labelledby="hero-title">
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <span class="hero__eyebrow">Renovierung &amp; Ausbau in Österreich</span>
+        <h1 id="hero-title">Renovieren mit klaren Preisen</h1>
+        <p>Abbruch, Innenausbau, Fassade, Dach und mehr – neun Gewerke aus einer Hand. Berechnen Sie Ihre Kosten online und vereinbaren Sie eine kostenlose Besichtigung.</p>
+        <div class="hero__btns">
+          <a class="btn btn--red" href="./kalkulator/">Preis berechnen</a>
+          <a class="btn btn--light" href="./kontakt/">Kostenlose Besichtigung</a>
         </div>
-        <p class="calc__disclaimer">Der endgültige Preis kann je nach Objekt, Zugänglichkeit, Zustand und Arbeitsaufwand abweichen.</p>
-
-        <form class="send" id="send" action="https://formsubmit.co/info@anadri.ro" method="POST" data-formsubmit data-anchor="#ergebnis" hidden>
-          <h3>Passt der Preis?</h3>
-          <p>Senden Sie uns Ihre Schätzung – wir melden uns für eine kostenlose Besichtigung. Eine Kopie geht an Ihre E-Mail-Adresse.</p>
-          <input type="hidden" name="_subject" value="Preisrechner Österreich – neue Anfrage">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_next" value="">
-        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <input type="hidden" name="_autoresponse" id="f-auto">
-          <input type="hidden" name="Leistungen" id="f-leistungen">
-          <input type="hidden" name="Schätzung (Mittelwert)" id="f-total">
-          <input type="hidden" name="Spannweite" id="f-range">
-          <input type="hidden" name="Verhandlungsspielraum (±10%)" id="f-margin">
-          <div class="form-grid form-grid--2">
-            <div class="field"><label for="f-name">Name</label><input id="f-name" type="text" name="Name" required maxlength="120" autocomplete="name"></div>
-            <div class="field"><label for="f-tel">Telefon</label><input id="f-tel" type="tel" name="Telefon" required maxlength="30" autocomplete="tel"></div>
-            <div class="field"><label for="f-email">E-Mail</label><input id="f-email" type="email" name="email" required maxlength="160" autocomplete="email"></div>
-            <div class="field"><label for="f-ort">PLZ / Ort des Objekts</label><input id="f-ort" type="text" name="Ort" required maxlength="120"></div>
-            <div class="field full"><label for="f-msg">Nachricht <small>(optional)</small></label><textarea id="f-msg" name="Nachricht" maxlength="2000" rows="3" placeholder="z.B. Baujahr, gewünschter Zeitraum, Besonderheiten"></textarea></div>
-            <label class="consent full"><input type="checkbox" name="Einwilligung" value="ja" required> <span>Ich stimme zu, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. <a href="./datenschutz/">Datenschutzerklärung</a></span></label>
-            <button class="cta full" type="submit">Schätzung senden &amp; Besichtigung anfordern</button>
-          </div>
-        </form>
-      </section>
+      </div>
+      <aside class="hero__card" aria-label="Richtpreise pro m²">
+        <div class="hero__card-head"><span>Richtpreise pro m²</span><span class="badge">Nur Arbeitsleistung</span></div>
+        <ul>
+          <li><a href="./leistungen/innenrenovierung/"><span>Innenrenovierung</span><b>250–550 €</b></a></li>
+          <li><a href="./leistungen/fassade-waermedaemmung/"><span>Fassade &amp; Wärmedämmung</span><b>70–120 €</b></a></li>
+          <li><a href="./leistungen/dacharbeiten/"><span>Dacharbeiten</span><b>60–140 €</b></a></li>
+          <li><a href="./leistungen/fliesen-bodenbelag/"><span>Fliesen &amp; Bodenbelag</span><b>24–44 €</b></a></li>
+        </ul>
+        <a class="hero__card-more" href="./leistungen/">Alle 9 Leistungen →</a>
+      </aside>
     </div>
-  </div>
+  </section>
 
-  <section class="section--white" aria-labelledby="leistungen-title">
+  <section class="trust" aria-label="Unsere Versprechen">
+    <div class="container trust__grid">
+      <div><b>Richtpreise online</b><span>Kosten sofort im Kalkulator sehen</span></div>
+      <div><b>Kostenlose Besichtigung</b><span>Unverbindlich vor Ort</span></div>
+      <div><b>Ein Ansprechpartner</b><span>Alle Gewerke koordiniert</span></div>
+      <div><b>Schriftliches Angebot</b><span>Ohne versteckte Positionen</span></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="leistungen-title">
     <div class="container">
-      <h2 class="section-title" id="leistungen-title">Unsere Leistungen</h2>
-      <p class="section-sub">Neun Gewerke, ein Ansprechpartner. Jede Leistung mit Richtpreis pro m² und genauer Beschreibung.</p>
+      <div class="section-head">
+        <div>
+          <h2 class="section-title" id="leistungen-title">Unsere Leistungen</h2>
+          <p class="section-sub">Jede Leistung mit Richtpreis pro m², genauer Beschreibung und eigenem Rechner.</p>
+        </div>
+        <a class="btn btn--ghost" href="./leistungen/">Alle Leistungen</a>
+      </div>
       <div class="svc-grid">
       <article class="svc">
         <h3>Abbruch &amp; Entsorgung</h3>
         <p>Fliesen, Böden, Wände und Einbauten entfernen, Bauschutt entsorgen</p>
         <div class="svc__price">35–60 €/m² <small>· Ø 47,5 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./abbruch-entsorgung/">Details</a><a class="btn btn--red" href="./?leistung=abbruch-entsorgung#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/abbruch-entsorgung/">Details</a><a class="btn btn--red" href="./kalkulator/?service=abbruch-entsorgung#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Innenrenovierung</h3>
         <p>Teil- oder Komplettrenovierung, alle Gewerke koordiniert</p>
         <div class="svc__price">250–550 €/m² <small>· Ø 400 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./innenrenovierung/">Details</a><a class="btn btn--red" href="./?leistung=innenrenovierung#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/innenrenovierung/">Details</a><a class="btn btn--red" href="./kalkulator/?service=innenrenovierung#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Fassade &amp; Wärmedämmung</h3>
         <p>Wärmedämmverbundsystem, Armierung, Oberputz und Anstrich</p>
         <div class="svc__price">70–120 €/m² <small>· Ø 95 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./fassade-waermedaemmung/">Details</a><a class="btn btn--red" href="./?leistung=fassade-waermedaemmung#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/fassade-waermedaemmung/">Details</a><a class="btn btn--red" href="./kalkulator/?service=fassade-waermedaemmung#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Dacharbeiten</h3>
         <p>Neueindeckung, Reparatur, Dachdämmung, Rinnen und Fallrohre</p>
         <div class="svc__price">60–140 €/m² <small>· Ø 100 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./dacharbeiten/">Details</a><a class="btn btn--red" href="./?leistung=dacharbeiten#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/dacharbeiten/">Details</a><a class="btn btn--red" href="./kalkulator/?service=dacharbeiten#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Elektroinstallation</h3>
         <p>Leitungen, Steckdosen, Schalter, Verteiler und FI-Schutzschalter</p>
         <div class="svc__price">95–200 €/m² <small>· Ø 147,5 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./elektroinstallation/">Details</a><a class="btn btn--red" href="./?leistung=elektroinstallation#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/elektroinstallation/">Details</a><a class="btn btn--red" href="./kalkulator/?service=elektroinstallation#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Wasser &amp; Sanitär</h3>
         <p>Wasser- und Abwasserleitungen, Bad komplett, Vorwand – ohne Gas</p>
         <div class="svc__price">80–160 €/m² <small>· Ø 120 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./wasser-sanitaer/">Details</a><a class="btn btn--red" href="./?leistung=wasser-sanitaer#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/wasser-sanitaer/">Details</a><a class="btn btn--red" href="./kalkulator/?service=wasser-sanitaer#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Maler &amp; Anstrich</h3>
         <p>Wände und Decken grundieren und zweimal streichen</p>
         <div class="svc__price">6–13 €/m² <small>· Ø 9,5 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./maler-anstrich/">Details</a><a class="btn btn--red" href="./?leistung=maler-anstrich#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/maler-anstrich/">Details</a><a class="btn btn--red" href="./kalkulator/?service=maler-anstrich#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Gipskarton &amp; Trockenbau</h3>
         <p>Trennwände, abgehängte Decken und Vorsatzschalen</p>
         <div class="svc__price">37–74 €/m² <small>· Ø 55,5 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./gipskarton-trockenbau/">Details</a><a class="btn btn--red" href="./?leistung=gipskarton-trockenbau#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/gipskarton-trockenbau/">Details</a><a class="btn btn--red" href="./kalkulator/?service=gipskarton-trockenbau#ergebnis">Berechnen</a></div>
       </article>
       <article class="svc">
         <h3>Fliesen &amp; Bodenbelag</h3>
         <p>Fliesen, Laminat, Parkett und Vinyl verlegen</p>
         <div class="svc__price">24–44 €/m² <small>· Ø 34 €/m²</small></div>
-        <div class="svc__actions"><a class="btn btn--ghost" href="./fliesen-bodenbelag/">Details</a><a class="btn btn--red" href="./?leistung=fliesen-bodenbelag#ergebnis">Berechnen</a></div>
+        <div class="svc__actions"><a class="btn btn--ghost" href="./leistungen/fliesen-bodenbelag/">Details</a><a class="btn btn--red" href="./kalkulator/?service=fliesen-bodenbelag#ergebnis">Berechnen</a></div>
       </article>
     </div>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="ablauf-title">
+  <section class="section--white" aria-labelledby="ablauf-title">
     <div class="container">
-      <h2 class="section-title" id="ablauf-title">So einfach geht's</h2>
-      <p class="section-sub">Von der Online-Schätzung bis zur Übergabe in vier Schritten.</p>
+      <div class="section-head">
+        <div>
+          <h2 class="section-title" id="ablauf-title">So einfach geht's</h2>
+          <p class="section-sub">Von der Online-Schätzung bis zur Übergabe in vier Schritten.</p>
+        </div>
+        <a class="btn btn--ghost" href="./ablauf/">Ablauf &amp; FAQ</a>
+      </div>
       <ol class="steps"><li><h3>Schätzung online</h3><p>Im Preisrechner wählen Sie die Arbeiten und sehen sofort eine unverbindliche Kostenschätzung.</p></li><li><h3>Kostenlose Besichtigung</h3><p>Wir sehen uns das Objekt vor Ort an, messen aus und klären Ihre Wünsche.</p></li><li><h3>Detailliertes Angebot</h3><p>Sie erhalten ein schriftliches Angebot mit Leistungen, Preisen und Zeitplan.</p></li><li><h3>Ausführung & Übergabe</h3><p>Wir führen die Arbeiten aus, halten Sie auf dem Laufenden und übergeben besenrein.</p></li></ol>
-      <div class="cta-band">
-      <div><h2>Bereit für Ihr Projekt?</h2><p>Berechnen Sie den Preis online oder vereinbaren Sie direkt eine kostenlose Besichtigung.</p></div>
-      <div class="btns"><a class="btn btn--red" href="./">Preis berechnen</a><a class="btn btn--light" href="./kontakt/">Besichtigung anfragen</a></div>
-    </div>
     </div>
   </section>
 
-  <div class="mobile-bar" id="mobile-bar" hidden>
-    <div><small>Ihre Schätzung</small><b id="bar-total">0 €</b></div>
-    <a href="#ergebnis">Weiter zum Senden</a>
+  <section class="section" aria-labelledby="ref-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title" id="ref-title">Referenzen</h2>
+          <p class="section-sub">Ausgeführte Projekte mit Ort, Umfang und Leistungen.</p>
+        </div>
+        <a class="btn btn--ghost" href="./referenzen/">Alle Referenzen</a>
+      </div>
+      <div class="refs">
+      <article class="ref" data-leistungen="abbruch-entsorgung innenrenovierung elektroinstallation maler-anstrich">
+        <div class="ref__img"><svg viewBox="0 0 400 300" role="img" aria-label="Noch kein Foto"><rect width="400" height="300" fill="#dfe3e8"/><rect y="225" width="400" height="75" fill="#c9cdd2"/><path d="M90 150 200 75l110 75Z" fill="#1a1a1a"/><rect x="108" y="148" width="184" height="80" fill="#fff"/><rect x="130" y="168" width="36" height="30" fill="#c41e3a"/><rect x="234" y="168" width="36" height="30" fill="#c41e3a"/><rect x="185" y="176" width="30" height="52" fill="#333"/></svg><span class="ref__flag">Platzhalter</span></div>
+        <div class="ref__body">
+          <h3>Komplettrenovierung einer Altbauwohnung</h3>
+          <p class="ref__meta">Wien · 2026 · 85 m²</p>
+          <p>Platzhalter: Hier steht die Beschreibung eines echten Projekts – Ausgangslage, was gemacht wurde und das Ergebnis.</p>
+          <ul class="ref__tags"><li><a href="./leistungen/abbruch-entsorgung/">Abbruch &amp; Entsorgung</a></li><li><a href="./leistungen/innenrenovierung/">Innenrenovierung</a></li><li><a href="./leistungen/elektroinstallation/">Elektroinstallation</a></li><li><a href="./leistungen/maler-anstrich/">Maler &amp; Anstrich</a></li></ul>
+          
+        </div>
+      </article>
+      <article class="ref" data-leistungen="fassade-waermedaemmung">
+        <div class="ref__img"><svg viewBox="0 0 400 300" role="img" aria-label="Noch kein Foto"><rect width="400" height="300" fill="#e8e3df"/><rect y="225" width="400" height="75" fill="#c9cdd2"/><path d="M90 150 200 75l110 75Z" fill="#1a1a1a"/><rect x="108" y="148" width="184" height="80" fill="#fff"/><rect x="130" y="168" width="36" height="30" fill="#c41e3a"/><rect x="234" y="168" width="36" height="30" fill="#c41e3a"/><rect x="185" y="176" width="30" height="52" fill="#333"/></svg><span class="ref__flag">Platzhalter</span></div>
+        <div class="ref__body">
+          <h3>Fassadendämmung eines Einfamilienhauses</h3>
+          <p class="ref__meta">Niederösterreich · 2026 · 180 m²</p>
+          <p>Platzhalter: Wärmedämmverbundsystem, Armierung, Oberputz und Anstrich. Wird durch ein echtes Projekt ersetzt.</p>
+          <ul class="ref__tags"><li><a href="./leistungen/fassade-waermedaemmung/">Fassade &amp; Wärmedämmung</a></li></ul>
+          
+        </div>
+      </article>
+      <article class="ref" data-leistungen="wasser-sanitaer fliesen-bodenbelag">
+        <div class="ref__img"><svg viewBox="0 0 400 300" role="img" aria-label="Noch kein Foto"><rect width="400" height="300" fill="#e3e8df"/><rect y="225" width="400" height="75" fill="#c9cdd2"/><path d="M90 150 200 75l110 75Z" fill="#1a1a1a"/><rect x="108" y="148" width="184" height="80" fill="#fff"/><rect x="130" y="168" width="36" height="30" fill="#c41e3a"/><rect x="234" y="168" width="36" height="30" fill="#c41e3a"/><rect x="185" y="176" width="30" height="52" fill="#333"/></svg><span class="ref__flag">Platzhalter</span></div>
+        <div class="ref__body">
+          <h3>Badsanierung mit neuen Fliesen</h3>
+          <p class="ref__meta">Wien · 2026 · 9 m²</p>
+          <p>Platzhalter: Neue Leitungen, Vorwandinstallation, Abdichtung und großformatige Fliesen. Wird durch ein echtes Projekt ersetzt.</p>
+          <ul class="ref__tags"><li><a href="./leistungen/wasser-sanitaer/">Wasser &amp; Sanitär</a></li><li><a href="./leistungen/fliesen-bodenbelag/">Fliesen &amp; Bodenbelag</a></li></ul>
+          
+        </div>
+      </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="cta-band">
+      <div><h2>Bereit für Ihr Projekt?</h2><p>Berechnen Sie den Preis online oder vereinbaren Sie direkt eine kostenlose Besichtigung.</p></div>
+      <div class="btns"><a class="btn btn--red" href="./kalkulator/">Preis berechnen</a><a class="btn btn--light" href="./kontakt/">Besichtigung anfragen</a></div>
+    </div>
   </div>
 </main>
 <footer class="site-footer">
@@ -162,18 +193,19 @@
       <div>
         <a class="brand" href="./"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#c41e3a"/><path d="M8 30 20 9l12 21h-5.2L20 18.4 13.2 30Z" fill="#fff"/><path d="M16.4 25h7.2" stroke="#fff" stroke-width="2.6"/></svg><span>ANADRI<small>Renovierung · Österreich</small></span></a>
         <p>Abbruch, Renovierung und Ausbau für Wohnungen und Häuser in Österreich. Transparente Richtpreise, kostenlose Besichtigung.</p>
-        <p><a class="btn btn--red" href="./">Preis berechnen</a></p>
+        <p><a class="btn btn--red" href="./kalkulator/">Preis berechnen</a></p>
       </div>
       <div>
         <h2>Leistungen</h2>
-        <ul><li><a href="./abbruch-entsorgung/">Abbruch &amp; Entsorgung</a></li><li><a href="./innenrenovierung/">Innenrenovierung</a></li><li><a href="./fassade-waermedaemmung/">Fassade &amp; Wärmedämmung</a></li><li><a href="./dacharbeiten/">Dacharbeiten</a></li><li><a href="./elektroinstallation/">Elektroinstallation</a></li><li><a href="./wasser-sanitaer/">Wasser &amp; Sanitär</a></li><li><a href="./maler-anstrich/">Maler &amp; Anstrich</a></li><li><a href="./gipskarton-trockenbau/">Gipskarton &amp; Trockenbau</a></li><li><a href="./fliesen-bodenbelag/">Fliesen &amp; Bodenbelag</a></li></ul>
+        <ul><li><a href="./leistungen/abbruch-entsorgung/">Abbruch &amp; Entsorgung</a></li><li><a href="./leistungen/innenrenovierung/">Innenrenovierung</a></li><li><a href="./leistungen/fassade-waermedaemmung/">Fassade &amp; Wärmedämmung</a></li><li><a href="./leistungen/dacharbeiten/">Dacharbeiten</a></li><li><a href="./leistungen/elektroinstallation/">Elektroinstallation</a></li><li><a href="./leistungen/wasser-sanitaer/">Wasser &amp; Sanitär</a></li><li><a href="./leistungen/maler-anstrich/">Maler &amp; Anstrich</a></li><li><a href="./leistungen/gipskarton-trockenbau/">Gipskarton &amp; Trockenbau</a></li><li><a href="./leistungen/fliesen-bodenbelag/">Fliesen &amp; Bodenbelag</a></li></ul>
       </div>
       <div>
         <h2>Unternehmen</h2>
         <ul>
+          <li><a href="./kalkulator/">Kalkulator</a></li>
           <li><a href="./referenzen/">Referenzen</a></li>
           <li><a href="./ablauf/">Ablauf &amp; FAQ</a></li>
-          <li><a href="./ueber-uns/">Über uns</a></li>
+          <li><a href="./uber-uns/">Über uns</a></li>
           <li><a href="./kontakt/">Kontakt</a></li>
           <li><a href="./impressum/">Impressum</a></li>
           <li><a href="./datenschutz/">Datenschutz</a></li>
@@ -184,8 +216,7 @@
     <div class="footer-bottom"><span>© 2026 ANADRI CONSULTING SRL</span><span>Alle Preise sind unverbindliche Richtpreise für die Arbeitsleistung.</span></div>
   </div>
 </footer>
-<script src="./assets/leistungen.js"></script>
-<script src="./assets/rechner.js"></script>
+
 <script src="./assets/nav.js"></script>
 </body>
 </html>

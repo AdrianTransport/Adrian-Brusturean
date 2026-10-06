@@ -270,7 +270,7 @@ body.has-bar{padding-bottom:76px}
 .ref__flag{position:absolute;top:12px;left:12px;background:#fff3cd;color:#7a5b00;font-size:.75em;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
 .ref__count{position:absolute;right:12px;bottom:12px;background:rgba(0,0,0,.7);color:#fff;font-size:.8em;padding:3px 9px;border-radius:999px}
 .ref__body{padding:18px 20px 20px}
-.ref__body h2{font-size:1.15em;margin:0 0 4px;color:var(--navy);line-height:1.3}
+.ref__body h2,.ref__body h3{font-size:1.15em;margin:0 0 4px;color:var(--navy);line-height:1.3}
 .ref__meta{font-size:.88em;color:#888;margin:0 0 10px}
 .ref__body p{margin:0 0 12px;color:var(--muted)}
 .ref__tags{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:6px}
@@ -282,3 +282,52 @@ body.has-bar{padding-bottom:76px}
 .refs-empty{color:var(--muted)}
 @media(min-width:640px){ .refs{grid-template-columns:1fr 1fr} }
 @media(min-width:1024px){ .refs{grid-template-columns:repeat(3,1fr)} .filters{flex-wrap:wrap;overflow:visible} }
+
+/* ---------- Startseite ---------- */
+.hero{background:linear-gradient(135deg,#1a1a1a 0%,#24151a 55%,#3a0f1a 100%);color:#fff;padding:44px 0 48px}
+.hero__inner{display:grid;gap:28px;align-items:center}
+.hero__eyebrow{display:inline-block;font-size:.78em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#f0b5bf;border:1px solid rgba(240,181,191,.4);border-radius:999px;padding:5px 12px}
+.hero h1{font-size:clamp(2.1em,8vw,3.4em);line-height:1.08;margin:16px 0 12px;letter-spacing:-.01em}
+.hero__text > p{font-size:1.08em;color:#d6d6d6;margin:0;max-width:600px}
+.hero__btns{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.hero__card{background:#fff;color:var(--text);border-radius:var(--radius);padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.hero__card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;font-weight:800;color:var(--navy)}
+.hero__card ul{list-style:none;margin:0;padding:0}
+.hero__card li a{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eee;color:var(--navy);text-decoration:none}
+.hero__card li a:hover span{color:var(--red)}
+.hero__card li b{color:var(--red);white-space:nowrap}
+.hero__card-more{display:block;margin-top:12px;font-weight:700;text-decoration:none}
+.trust{background:#fff;border-bottom:1px solid #e6e6e6}
+.trust__grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding-top:20px;padding-bottom:20px}
+.trust__grid div{border-left:3px solid var(--red);padding-left:12px}
+.trust__grid b{display:block;color:var(--navy);font-size:.95em;line-height:1.3}
+.trust__grid span{font-size:.82em;color:var(--muted)}
+.section-head{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.section-head .section-sub{margin-bottom:0}
+.section-head > .btn{align-self:flex-start}
+main > .section{padding:40px 0}
+
+/* ---------- Karte ---------- */
+.map{position:relative;border-radius:var(--radius);overflow:hidden;background:#f0f0f0;aspect-ratio:4/3;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.map__placeholder{position:absolute;inset:0;display:grid;place-items:center;padding:20px;text-align:center}
+.map__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.9}
+.map__text{position:relative;max-width:420px;background:rgba(255,255,255,.94);border-radius:10px;padding:18px}
+.map__text p{margin:10px 0 0;font-size:.85em;color:var(--muted)}
+
+@media(min-width:560px){
+  .hero__btns{flex-direction:row}
+  .map{aspect-ratio:16/9}
+}
+@media(min-width:768px){
+  .hero{padding:64px 0 72px}
+  .trust__grid{grid-template-columns:repeat(4,1fr);padding-top:24px;padding-bottom:24px}
+  .section-head{flex-direction:row;justify-content:space-between;align-items:flex-end}
+  .section-head > .btn{align-self:auto;flex:none}
+  main > .section{padding:56px 0}
+  .map{aspect-ratio:21/9}
+}
+@media(min-width:1024px){
+  .hero__inner{grid-template-columns:1.25fr 1fr;gap:56px}
+  .hero{padding:88px 0 96px}
+}

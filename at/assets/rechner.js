@@ -28,7 +28,7 @@
         '<input id="area-' + s.id + '" type="text" inputmode="decimal" autocomplete="off" placeholder="' + s.ph + '" data-area></div>' +
         '<div class="subtotal" data-subtotal>Fläche eingeben</div>' +
       '</div>' +
-      '<div class="service__more"><a href="' + s.id + '/">Was ist enthalten? →</a></div>' +
+      '<div class="service__more"><a href="../leistungen/' + s.id + '/">Was ist enthalten? →</a></div>' +
     '</div>';
   }).join('');
 
@@ -102,9 +102,9 @@
     if (e.target.matches('[data-area]')) calculate();
   });
 
-  // Von einer Leistungsseite: ?leistung=…&flaeche=…
+  // Von einer Leistungsseite: ?service=…&flaeche=…
   var params = new URLSearchParams(location.search);
-  var pre = params.get('leistung');
+  var pre = params.get('service') || params.get('leistung');
   if (pre && rowFor(pre)) {
     var row = rowFor(pre);
     setChecked(row, true);
