@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANADRI Preisrechner — Renovierungskosten in Österreich</title>
+<meta name="description" content="Unverbindliche Kostenschätzung für Abbruch, Innenrenovierung, Fassade, Dach, Elektro, Sanitär, Maler, Trockenbau und Fliesen in Österreich.">
+<link rel="alternate" hreflang="de-AT" href="./">
+<link rel="alternate" hreflang="ro" href="../ro/">
+<style>
+:root{
+  --red:#c41e3a; --red-dark:#a3172f; --dark:#1a1a1a; --navy:#0f1e2e;
+  --text:#333; --light:#aaa; --line:#ddd; --soft:#f6f6f6; --white:#fff;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:1em;color:var(--text);background:#f2f2f2;line-height:1.5}
+.container{max-width:1240px;margin:0 auto;padding:16px}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;color:var(--dark);text-decoration:none}
+.brand svg{width:34px;height:34px;flex:none}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-size:13px;font-weight:700;background:#fff}
+.lang a,.lang span{padding:6px 11px;text-decoration:none}
+.lang span{background:var(--red);color:#fff}
+.lang a{color:#666}
+.lang a:hover{color:var(--red)}
+
+header h1{font-size:clamp(1.8em,6vw,2.5em);line-height:1.15;margin:0 0 8px;color:var(--navy)}
+header p{margin:0 0 28px;color:#555;max-width:640px}
+
+.main-content{display:grid;gap:24px;align-items:start}
+
+/* Eingabe */
+.input-section{background:var(--white);border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.08);padding:20px}
+.input-section h2{font-size:1.3em;color:var(--navy);margin:0 0 8px;padding-bottom:10px;border-bottom:2px solid var(--red)}
+.hint{font-size:.9em;color:#666;margin:0 0 20px}
+.service{border:1px solid var(--line);border-radius:8px;margin-bottom:12px;transition:border-color .15s,background .15s}
+.service.is-on{border-color:var(--red);background:#fff8f9}
+.service__head{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer}
+.service__head input{width:22px;height:22px;margin:0;flex:none;accent-color:var(--red);cursor:pointer}
+.service__name{flex:1;font-weight:600;color:var(--navy)}
+.service__price{font-size:.85em;color:#777;white-space:nowrap}
+.service__body{display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:end;padding:0 14px 14px 48px}
+.service__body[hidden]{display:none}
+.area label{display:block;font-size:.85em;font-weight:600;margin-bottom:4px}
+.area input{width:100%;max-width:180px;font:inherit;font-size:16px;padding:10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--navy)}
+.area input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(196,30,58,.15)}
+.subtotal{font-size:.9em;color:#555;text-align:right;padding-bottom:10px;white-space:nowrap}
+.subtotal b{color:var(--navy);font-size:1.1em}
+
+/* Ergebnis */
+.result-section{background:var(--dark);color:var(--white);border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,.2);padding:24px}
+.result-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.result-label{font-size:.85em;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--light)}
+.result-badge{background:var(--red);color:#fff;font-size:.75em;font-weight:700;padding:4px 10px;border-radius:999px}
+.disclaimer-top{font-size:.85em;color:#ddd;border-left:3px solid var(--red);padding-left:10px;margin:0 0 20px}
+.empty{color:var(--light);padding:24px 0;margin:0}
+.price-value{font-size:clamp(2.4em,10vw,3.5em);font-weight:800;line-height:1.1;margin:4px 0 6px;word-break:break-word}
+.price-sub{font-size:.85em;color:var(--light);margin:0 0 14px}
+.range{font-size:.95em;color:#ddd;margin:0 0 14px}
+.range b{color:#fff}
+.margin-box{background:rgba(196,30,58,.1);border:1px solid rgba(196,30,58,.6);border-radius:8px;padding:12px 14px;margin-bottom:16px}
+.margin-box div{font-size:.8em;color:#f0b5bf;font-weight:600}
+.margin-box b{font-size:1.15em}
+.breakdown{list-style:none;margin:0 0 16px;padding:0;font-size:.85em;color:#ccc;border-top:1px solid #333}
+.breakdown li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid #2a2a2a}
+.disclaimer{font-size:.78em;color:var(--light);margin:0 0 18px}
+.cta-button{display:block;width:100%;min-height:50px;padding:14px;border:0;border-radius:6px;background:var(--red);color:#fff;font:inherit;font-weight:700;font-size:1em;cursor:pointer;text-align:center;text-decoration:none}
+.cta-button:hover{background:var(--red-dark)}
+.cta-note{font-size:.78em;color:var(--light);margin:10px 0 0;text-align:center}
+
+footer{margin-top:32px;font-size:.85em;color:#777;text-align:center}
+footer a{color:#555}
+
+@media(max-width:420px){
+  .service__body{grid-template-columns:1fr;padding-left:14px}
+  .subtotal{text-align:left;padding-bottom:0}
+  .area input{max-width:none}
+}
+@media(min-width:768px){
+  .container{padding:40px}
+  .input-section,.result-section{padding:32px}
+  .main-content{grid-template-columns:1.35fr 1fr;gap:40px}
+  .result-section{position:sticky;top:20px}
+  .service{margin-bottom:25px}
+}
+@media(min-width:768px) and (max-width:1023px){
+  .main-content{grid-template-columns:1.2fr 1fr;gap:24px}
+  .service__body{grid-template-columns:1fr;padding-left:14px}
+  .subtotal{text-align:left;padding-bottom:0}
+  .service__head{flex-wrap:wrap}
+  .service__price{width:100%;padding-left:34px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <a class="brand" href="./" aria-label="ANADRI — Startseite">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#c41e3a"/><path d="M8 30 20 9l12 21h-5.2L20 18.4 13.2 30Z" fill="#fff"/><path d="M16.4 25h7.2" stroke="#fff" stroke-width="2.6"/></svg>
+      ANADRI
+    </a>
+    <div class="lang" aria-label="Sprache">
+      <a href="../ro/" hreflang="ro" lang="ro" title="Versiunea în limba română">RO</a>
+      <span aria-current="page">DE</span>
+    </div>
+  </div>
+
+  <header>
+    <h1>ANADRI Preisrechner</h1>
+    <p>Erhalten Sie eine unverbindliche Kostenschätzung für Ihr Renovierungsprojekt</p>
+  </header>
+
+  <main class="main-content">
+    <section class="input-section" aria-labelledby="input-title">
+      <h2 id="input-title">Projektdetails eingeben</h2>
+      <p class="hint">Wählen Sie die gewünschten Leistungen und geben Sie jeweils die Fläche ein.</p>
+      <div id="services"></div>
+    </section>
+
+    <section class="result-section" aria-labelledby="result-title" aria-live="polite">
+      <div class="result-head">
+        <div class="result-label" id="result-title">Kostenschätzung</div>
+        <span class="result-badge">Unverbindlich</span>
+      </div>
+      <p class="disclaimer-top">Richtpreise nur für Arbeitsleistung – Material nicht enthalten.</p>
+
+      <p class="empty" id="empty">Wählen Sie mindestens eine Leistung aus, um eine Schätzung zu sehen</p>
+
+      <div id="result" hidden>
+        <div class="price-value" id="total">0 €</div>
+        <p class="price-sub">Mittelwert der Richtpreise</p>
+        <p class="range">Spannweite: <b id="range">0 € – 0 €</b></p>
+        <div class="margin-box">
+          <div>Mit Verhandlungsspielraum (±10%)</div>
+          <b id="margin">0 € – 0 €</b>
+        </div>
+        <ul class="breakdown" id="breakdown"></ul>
+      </div>
+
+      <p class="disclaimer">Der endgültige Preis kann je nach Objekt, Zugänglichkeit, Zustand und Arbeitsaufwand abweichen.</p>
+      <a class="cta-button" id="cta" href="mailto:info@anadri.ro">Kostenlose Besichtigung anfordern</a>
+      <p class="cta-note">Öffnet Ihr E-Mail-Programm mit Ihrer Schätzung. Wir melden uns mit einem detaillierten Angebot.</p>
+    </section>
+  </main>
+
+  <footer>© 2026 ANADRI CONSULTING SRL · <a href="mailto:info@anadri.ro">info@anadri.ro</a></footer>
+</div>
+
+<script>
+(function () {
+  // Richtpreise Wien (Faktor 1,15 bereits enthalten), nur Arbeitsleistung, €/m²
+  var SERVICES = [
+    { id: 'abbruch',   name: 'Abbruch & Entsorgung',       min: 35,  max: 60,  ph: 'z.B. 50' },
+    { id: 'innen',     name: 'Innenrenovierung',           min: 250, max: 550, ph: 'z.B. 100' },
+    { id: 'fassade',   name: 'Fassade & Wärmedämmung',     min: 70,  max: 120, ph: 'z.B. 150' },
+    { id: 'dach',      name: 'Dacharbeiten',               min: 60,  max: 140, ph: 'z.B. 120' },
+    { id: 'elektro',   name: 'Elektroinstallation',        min: 95,  max: 200, ph: 'z.B. 100' },
+    { id: 'sanitaer',  name: 'Wasser & Sanitär',           min: 80,  max: 160, ph: 'z.B. 50' },
+    { id: 'maler',     name: 'Maler & Anstrich',           min: 6,   max: 13,  ph: 'z.B. 250' },
+    { id: 'trockenbau',name: 'Gipskarton & Trockenbau',    min: 37,  max: 74,  ph: 'z.B. 80' },
+    { id: 'fliesen',   name: 'Fliesen & Bodenbelag',       min: 24,  max: 44,  ph: 'z.B. 60' }
+  ];
+  var MARGIN = 0.10;
+  var EMAIL = 'info@anadri.ro';
+
+  var nf = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
+  function eur(v) { return nf.format(Math.round(v)) + ' €'; }
+  function avg(s) { return (s.min + s.max) / 2; }
+  function parseArea(value) {
+    var n = parseFloat(String(value).replace(/\s/g, '').replace(',', '.'));
+    return isFinite(n) && n > 0 ? Math.min(n, 100000) : 0;
+  }
+
+  var list = document.getElementById('services');
+  list.innerHTML = SERVICES.map(function (s) {
+    return '<div class="service" data-id="' + s.id + '">' +
+      '<label class="service__head"><input type="checkbox" data-check>' +
+      '<span class="service__name">' + s.name + '</span>' +
+      '<span class="service__price">' + s.min + '–' + s.max + ' €/m²</span></label>' +
+      '<div class="service__body" hidden>' +
+        '<div class="area"><label for="area-' + s.id + '">Fläche (m²)</label>' +
+        '<input id="area-' + s.id + '" type="text" inputmode="decimal" autocomplete="off" placeholder="' + s.ph + '" data-area></div>' +
+        '<div class="subtotal" data-subtotal>Fläche eingeben</div>' +
+      '</div></div>';
+  }).join('');
+
+  var els = {
+    empty: document.getElementById('empty'),
+    result: document.getElementById('result'),
+    total: document.getElementById('total'),
+    range: document.getElementById('range'),
+    margin: document.getElementById('margin'),
+    breakdown: document.getElementById('breakdown'),
+    cta: document.getElementById('cta')
+  };
+
+  function rowFor(id) { return list.querySelector('.service[data-id="' + id + '"]'); }
+
+  function calculate() {
+    var selected = 0, lines = [], total = 0, low = 0, high = 0;
+
+    SERVICES.forEach(function (s) {
+      var row = rowFor(s.id);
+      if (!row.querySelector('[data-check]').checked) return;
+      selected++;
+      var area = parseArea(row.querySelector('[data-area]').value);
+      var sub = row.querySelector('[data-subtotal]');
+      if (!area) { sub.textContent = 'Fläche eingeben'; return; }
+      var value = area * avg(s);
+      sub.innerHTML = 'Zwischensumme: <b>' + eur(value) + '</b>';
+      total += value; low += area * s.min; high += area * s.max;
+      lines.push({ name: s.name, area: area, value: value });
+    });
+
+    if (!selected) {
+      els.empty.textContent = 'Wählen Sie mindestens eine Leistung aus, um eine Schätzung zu sehen';
+    } else if (!lines.length) {
+      els.empty.textContent = 'Geben Sie die Fläche (m²) für die gewählten Leistungen ein.';
+    }
+    els.empty.hidden = lines.length > 0;
+    els.result.hidden = lines.length === 0;
+
+    if (lines.length) {
+      els.total.textContent = eur(total);
+      els.range.textContent = eur(low) + ' – ' + eur(high);
+      els.margin.textContent = eur(total * (1 - MARGIN)) + ' – ' + eur(total * (1 + MARGIN));
+      els.breakdown.innerHTML = lines.map(function (l) {
+        return '<li><span>' + l.name + ' · ' + nf.format(l.area) + ' m²</span><span>' + eur(l.value) + '</span></li>';
+      }).join('');
+    }
+    updateMail(lines, total, low, high);
+  }
+
+  function updateMail(lines, total, low, high) {
+    var body = 'Guten Tag,\n\nich bitte um eine kostenlose Besichtigung.\n\n';
+    if (lines.length) {
+      body += 'Meine Schätzung mit dem ANADRI Preisrechner:\n';
+      lines.forEach(function (l) { body += '- ' + l.name + ': ' + nf.format(l.area) + ' m² ≈ ' + eur(l.value) + '\n'; });
+      body += '\nMittelwert: ' + eur(total) + '\nSpannweite: ' + eur(low) + ' – ' + eur(high) + '\n';
+    }
+    body += '\nOrt des Objekts:\nTelefon:\n\nMit freundlichen Grüßen\n';
+    els.cta.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Besichtigung anfordern – Preisrechner') + '&body=' + encodeURIComponent(body);
+  }
+
+  list.addEventListener('change', function (e) {
+    if (!e.target.matches('[data-check]')) return;
+    var row = e.target.closest('.service');
+    var body = row.querySelector('.service__body');
+    var input = row.querySelector('[data-area]');
+    row.classList.toggle('is-on', e.target.checked);
+    body.hidden = !e.target.checked;
+    if (e.target.checked) input.focus();
+    else input.value = '';
+    calculate();
+  });
+  list.addEventListener('input', function (e) {
+    if (e.target.matches('[data-area]')) calculate();
+  });
+
+  calculate();
+})();
+</script>
+</body>
+</html>
