@@ -578,7 +578,9 @@ for (const [file, html] of Object.entries(pages)) {
 }
 console.log(Object.keys(pages).length + ' pagini RO scrise');
 
-// ---------- sitemap.xml + robots.txt (rădăcina site-ului) ----------
+// sitemap.xml + robots.txt: vezi tools/build-sitemap.cjs (acoperă ro/ și at/)
+if (false) {
+// ---------- (vechi) sitemap.xml + robots.txt ----------
 const today = new Date().toISOString().slice(0, 10);
 const urls = [];
 const add = (loc, priority, changefreq = 'monthly') => urls.push({ loc, priority, changefreq });
@@ -598,3 +600,4 @@ const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://w
 fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
 fs.writeFileSync(path.join(ROOT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /at/assets/hero-images/Renovari/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 console.log(`sitemap.xml: ${urls.length} URL-uri · robots.txt scris`);
+}

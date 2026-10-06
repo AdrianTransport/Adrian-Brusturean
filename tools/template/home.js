@@ -9,7 +9,7 @@ const ICONS = {
 const STAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3 6.6 7 .8-5.2 4.8 1.4 7L12 17.7 5.8 21.2l1.4-7L2 9.4l7-.8z"/></svg>';
 const FLAG = '<span class="ph-flag">Platzhalter</span>';
 
-module.exports = function home({ r, LIST, REFS, START, HERO_VIDEO, esc, serviceCards, stepsList, ctaBand, refCard }) {
+module.exports = function home({ r, LIST, REFS, START, HERO_VIDEO, ORTE, REGIONEN, esc, serviceCards, stepsList, ctaBand, refCard }) {
   const preview = ['innenrenovierung', 'fassade-waermedaemmung', 'dacharbeiten', 'fliesen-bodenbelag']
     .map(id => LIST.find(s => s.id === id)).filter(Boolean);
   const byId = Object.fromEntries(LIST.map(s => [s.id, s]));
@@ -110,6 +110,24 @@ module.exports = function home({ r, LIST, REFS, START, HERO_VIDEO, esc, serviceC
         <a class="btn btn--ghost" href="${r}referenzen/">Alle Referenzen</a>
       </div>
       <div class="refs">${REFS.slice(0, 3).map((ref, i) => refCard(r, ref, i, 'h3')).join('')}
+      </div>
+    </div>
+  </section>` : ''}
+
+  ${ORTE ? `<section class="section" aria-labelledby="regionen-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title" id="regionen-title">Wo wir arbeiten</h2>
+          <p class="section-sub">Alle 23 Wiener Bezirke, das Wiener Umland und das Burgenland bis zur ungarischen Grenze – Besichtigung überall kostenlos.</p>
+        </div>
+        <a class="btn btn--ghost" href="${r}regionen/">Alle Orte</a>
+      </div>
+      <div class="zone-grid zone-grid--3">${Object.keys(REGIONEN).map(rk => { const list = ORTE.filter(o => o.region === rk); return `
+        <div class="zone-col">
+          <h3><a href="${r}regionen/${rk}/">${esc(REGIONEN[rk].name)}</a></h3>
+          <ul class="chips">${list.slice(0, 10).map(o => `<li><a href="${r}regionen/${rk}/${o.slug}/">${esc(o.kurz || o.name)}</a></li>`).join('')}${list.length > 10 ? `<li><a class="chips__more" href="${r}regionen/${rk}/">+ ${list.length - 10} weitere</a></li>` : ''}</ul>
+        </div>`; }).join('')}
       </div>
     </div>
   </section>` : ''}

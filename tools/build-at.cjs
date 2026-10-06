@@ -24,6 +24,13 @@ const LIST = sandbox.window.ANADRI_LEISTUNGEN;
 const EMAIL = sandbox.window.ANADRI_EMAIL;
 const REFS = JSON.parse(fs.readFileSync(path.join(__dirname, 'referenzen.json'), 'utf8'));
 const START = JSON.parse(fs.readFileSync(path.join(__dirname, 'startseite.json'), 'utf8'));
+// Einsatzorte (Wien, Umland, Grenzregion) – lokale Seiten unter /regionen/
+const ORTE_DATA = JSON.parse(fs.readFileSync(path.join(__dirname, 'orte-at.json'), 'utf8'));
+const ORTE = ORTE_DATA.orte;
+const REGIONEN = ORTE_DATA.regionen;
+const byRegion = r => ORTE.filter(o => o.region === r);
+// Öffentliche Adresse (canonical, strukturierte Daten). Beim eigenen Domain ändern.
+const SITE_URL = 'https://adrianbrusturean.netlify.app';
 
 // Hero-Video: wird nur eingebaut, wenn at/assets/hero-images/hero.mp4 vorhanden ist (optional hero.jpg als Poster).
 const HERO_VIDEO = fs.existsSync(path.join(AT, 'assets/hero-images/hero.mp4'))
@@ -44,6 +51,7 @@ const NAV = [
   { key: 'referenzen', href: 'referenzen/', label: 'Referenzen' },
   { key: 'ablauf', href: 'ablauf/', label: 'Ablauf' },
   { key: 'uber-uns', href: 'uber-uns/', label: 'Über uns' },
+  { key: 'regionen', href: 'regionen/', label: 'Regionen' },
   { key: 'kontakt', href: 'kontakt/', label: 'Kontakt' }
 ];
 
@@ -122,7 +130,7 @@ const STEPS = [
 ];
 
 // ---------- Layout ----------
-function layout({ depth, active, title, description, body, scripts = [], noindex = false, bodyClass = '' }) {
+function layout({ depth, active, title, description, body, scripts = [], noindex = false, bodyClass = '', pagePath = '' }) {
   const r = depth ? '../'.repeat(depth) : './';
   const nav = NAV.map(n =>
     `<li><a href="${r}${n.href}"${n.key === active ? ' aria-current="page"' : ''}>${n.label}</a></li>`).join('');
@@ -135,6 +143,13 @@ function layout({ depth, active, title, description, body, scripts = [], noindex
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta name="theme-color" content="#1a1a1a">
+<link rel="canonical" href="${SITE_URL}/at/${pagePath}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ANADRI Renovierung Österreich">
+<meta property="og:locale" content="de_AT">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${SITE_URL}/at/${pagePath}">
 <link rel="icon" type="image/svg+xml" href="${r}assets/logo/icon.svg">
 <link rel="apple-touch-icon" href="${r}assets/logo/apple-touch-icon.png">
 <link rel="stylesheet" href="${r}assets/site.css">
@@ -174,6 +189,7 @@ ${body}
           <li><a href="${r}referenzen/">Referenzen</a></li>
           <li><a href="${r}ablauf/">Ablauf &amp; FAQ</a></li>
           <li><a href="${r}uber-uns/">Über uns</a></li>
+          <li><a href="${r}regionen/">Einsatzgebiete: Wien, NÖ, Burgenland</a></li>
           <li><a href="${r}kontakt/">Kontakt</a></li>
           <li><a href="${r}impressum/">Impressum</a></li>
           <li><a href="${r}datenschutz/">Datenschutz</a></li>
@@ -235,7 +251,7 @@ pages['index.html'] = layout({
   depth: 0, active: '',
   title: 'ANADRI — Renovierung & Ausbau in Österreich mit klaren Preisen',
   description: 'Abbruch, Innenrenovierung, Fassade, Dach, Elektro, Sanitär, Maler, Trockenbau und Fliesen in Österreich. Richtpreise online berechnen, kostenlose Besichtigung.',
-  body: home({ r: './', LIST, REFS, START, HERO_VIDEO, esc, serviceCards, stepsList, ctaBand, refCard })
+  body: home({ r: './', LIST, REFS, START, HERO_VIDEO, ORTE, REGIONEN, esc, serviceCards, stepsList, ctaBand, refCard })
 });
 
 pages['kalkulator/index.html'] = layout({
@@ -581,9 +597,135 @@ pages['datenschutz/index.html'] = layout({
   </div>`
 });
 
+// ---------- Lokale Seiten: /regionen/, /regionen/<region>/, /regionen/<region>/<ort>/ ----------
+const PROFIL = {
+  innen: {
+    titel: 'Altbau-Wohnungen fachgerecht sanieren',
+    text: o => `In ${o.kurz || o.name} prägen Gründerzeithäuser das Bild. Wir sanieren Wohnungen komplett: Elektrik und Wasserleitungen neu, Bad und Küche, Wände spachteln und streichen, Böden verlegen – und wo nötig eine neue Raumaufteilung mit Trockenbau. Alles aus einer Hand, auch bei engen Stiegenhäusern ohne Lift.`,
+    leistungen: ['innenrenovierung', 'elektroinstallation', 'wasser-sanitaer', 'maler-anstrich', 'gipskarton-trockenbau', 'fliesen-bodenbelag']
+  },
+  aussen: {
+    titel: 'Wohnungen und Einfamilienhäuser modernisieren',
+    text: o => `${o.kurz || o.name} verbindet dichte Wohnviertel mit Einfamilienhaus-Siedlungen. Entsprechend breit ist unser Angebot: Badsanierung und Elektrik in der Wohnung, Fassadendämmung, Dacharbeiten und Dachgeschoßausbau am Haus – mit Richtpreis pro m² und schriftlichem Angebot nach der Besichtigung.`,
+    leistungen: ['innenrenovierung', 'fassade-waermedaemmung', 'dacharbeiten', 'wasser-sanitaer', 'elektroinstallation', 'fliesen-bodenbelag']
+  },
+  umland: {
+    titel: 'Einfamilienhäuser im Wiener Umland',
+    text: o => `In ${o.name} wohnen viele Familien im eigenen Haus – oft gebaut zwischen 1970 und 2000. Diese Häuser kommen jetzt ins Sanierungsalter: Dach, Wärmedämmung, Leitungen, Bad und Böden. Wir koordinieren alle Gewerke und halten den Zeitplan ein.`,
+    leistungen: ['fassade-waermedaemmung', 'dacharbeiten', 'innenrenovierung', 'wasser-sanitaer', 'elektroinstallation', 'fliesen-bodenbelag']
+  },
+  grenze: {
+    titel: 'Höfe, Winzerhäuser und Neubauten nahe der Grenze',
+    text: o => `Rund um ${o.name} stehen viele traditionelle Streck- und Bauernhöfe mit großen Dächern und dicken Mauern – dazu kommt Neubau durch Zuzug aus Wien. Wir sanieren Dach und Fassade, erneuern Elektrik und Sanitär, bauen Trockenbau ein und verlegen Fliesen und Böden; Abbruch und Entsorgung übernehmen wir gleich mit.`,
+    leistungen: ['dacharbeiten', 'fassade-waermedaemmung', 'abbruch-entsorgung', 'innenrenovierung', 'elektroinstallation', 'fliesen-bodenbelag']
+  }
+};
+const fahrzeit = km => Math.max(10, Math.round(km / 50 * 60 / 5) * 5);
+const distText = o => o.region === 'wien'
+  ? `${o.kurz || o.name} liegt ${o.km <= 2 ? 'im Zentrum Wiens' : 'etwa ' + o.km + ' km vom Wiener Stadtzentrum entfernt'}.`
+  : `${o.name} liegt rund ${o.km} km von Wien – etwa ${fahrzeit(o.km)} Minuten Fahrt.`;
+const nachbarn = o => byRegion(o.region).filter(x => x.slug !== o.slug).map(x => ({ x, d: Math.abs(x.km - o.km) + (x.profil === o.profil ? 0 : 6) })).sort((a, b) => a.d - b.d).slice(0, 6).map(v => v.x);
+const bezirkNr = o => (o.name.match(/\((\d+)\. Bezirk\)/) || [])[1];
+
+function ortPage(o) {
+  const R = REGIONEN[o.region], P = PROFIL[o.profil];
+  const kurz = o.kurz || o.name;
+  const ls = P.leistungen.map(id => byId[id]).filter(Boolean);
+  const url = `regionen/${o.region}/${o.slug}/`;
+  const title = `Renovierung in ${kurz}${o.region === 'wien' ? ' (Wien ' + bezirkNr(o) + '.)' : ''} – Richtpreise pro m² | ANADRI`;
+  const description = `Innenrenovierung, Dach, Fassade, Elektro und Sanitär in ${kurz} (${R.name}). Unverbindliche Richtpreise pro m², kostenlose Besichtigung vor Ort.`;
+  const ld = [
+    { '@context': 'https://schema.org', '@type': 'Service', name: `Renovierung in ${kurz}`, serviceType: 'Renovierung und Ausbau', provider: { '@type': 'HomeAndConstructionBusiness', name: 'ANADRI', url: SITE_URL + '/at/' }, areaServed: { '@type': o.region === 'wien' ? 'AdministrativeArea' : 'City', name: o.name, containedInPlace: { '@type': 'AdministrativeArea', name: R.name } }, url: `${SITE_URL}/at/${url}` },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Startseite', item: SITE_URL + '/at/' },
+      { '@type': 'ListItem', position: 2, name: 'Regionen', item: SITE_URL + '/at/regionen/' },
+      { '@type': 'ListItem', position: 3, name: R.name, item: `${SITE_URL}/at/regionen/${o.region}/` },
+      { '@type': 'ListItem', position: 4, name: kurz, item: `${SITE_URL}/at/${url}` }] }
+  ];
+  return layout({
+    depth: 3, active: 'regionen', pagePath: url, title, description,
+    body: `${pageHead({
+      crumbs: `<a href="../../../">Startseite</a> / <a href="../../">Regionen</a> / <a href="../">${esc(R.name)}</a> / ${esc(kurz)}`,
+      h1: `Renovierung in ${esc(kurz)}`,
+      lead: `${esc(distText(o))} Wir renovieren Wohnungen und Häuser in ${esc(kurz)} – mit Richtpreisen pro m², kostenloser Besichtigung und einem Ansprechpartner für alle Gewerke.`
+    })}
+  <div class="container">
+    <div class="layout">
+      <article class="card">
+        <section>
+          <h2>${esc(P.titel)}</h2>
+          <p>${esc(P.text(o))}</p>
+          <p class="note">${esc(o.nota)}</p>
+        </section>
+        <section>
+          <h2>Häufige Arbeiten in ${esc(kurz)}</h2>
+          <ul class="checks">${ls.map(s => `<li><a href="../../../leistungen/${s.id}/"><b>${esc(s.name)}</b></a> – ${esc(s.desc)}. <span class="muted">${s.min}–${s.max} €/m² Arbeitsleistung</span></li>`).join('')}</ul>
+        </section>
+        <section>
+          <h2>Fragen aus ${esc(kurz)}</h2>
+          <div class="faq">
+            <details><summary>Kommen Sie kostenlos zur Besichtigung nach ${esc(kurz)}?</summary><p>Ja. ${esc(distText(o))} Besichtigung und Aufmaß sind in der gesamten Region ${esc(R.name)} kostenlos und unverbindlich.</p></details>
+            <details><summary>Was kostet eine Innenrenovierung in ${esc(kurz)} pro m²?</summary><p>Als Richtwert ${byId['innenrenovierung'].min}–${byId['innenrenovierung'].max} €/m² für die Arbeitsleistung, je nach Umfang vom Auffrischen bis zur Komplettsanierung. Material ist nicht enthalten. Den verbindlichen Preis erhalten Sie im schriftlichen Angebot nach der Besichtigung.</p></details>
+            <details><summary>Arbeiten Sie auch in den Nachbarorten?</summary><p>Ja – zum Beispiel in ${nachbarn(o).map(x => esc(x.kurz || x.name)).join(', ')} und in der gesamten Region ${esc(R.name)}.</p></details>
+          </div>
+        </section>
+      </article>
+      <aside class="calc">
+        <div class="calc__head"><div class="calc__label">Kostenschätzung</div><span class="badge">Unverbindlich</span></div>
+        <p class="calc__top">Richtpreise für die Arbeitsleistung, gültig auch in ${esc(kurz)}.</p>
+        <dl class="info-list">${ls.slice(0, 4).map(s => `<div><dt>${esc(s.name)}</dt><dd>${s.min}–${s.max} €/m²</dd></div>`).join('')}</dl>
+        <p class="calc__disclaimer" style="margin-top:18px">Leistungen wählen, Fläche eingeben, Summe sehen – und mit einem Klick an uns senden.</p>
+        <a class="cta" href="../../../kalkulator/">Preis für ${esc(kurz)} berechnen</a>
+        <a class="calc__more" href="../../../kontakt/">Oder direkt eine Besichtigung anfragen →</a>
+      </aside>
+    </div>
+
+    <section class="section" aria-labelledby="nachbarn-title">
+      <h2 class="section-title" id="nachbarn-title">In der Nähe</h2>
+      <div class="tiles">${nachbarn(o).map(x => `<a class="tile" href="../${x.slug}/">${esc(x.kurz || x.name)} <span>${x.region === 'wien' ? bezirkNr(x) + '. Bezirk' : esc(x.typ) + ' · ~' + x.km + ' km von Wien'}</span></a>`).join('')}</div>
+    </section>
+    ${ctaBand('../../../')}
+  </div>
+  <script type="application/ld+json">${JSON.stringify(ld)}</script>`
+  });
+}
+
+function regionPage(rk) {
+  const R = REGIONEN[rk], list = byRegion(rk);
+  const sorted = rk === 'wien' ? list : [...list].sort((a, b) => a.km - b.km);
+  return layout({
+    depth: 2, active: 'regionen', pagePath: `regionen/${rk}/`,
+    title: `Renovierung in ${R.name} – ${list.length} Orte | ANADRI`,
+    description: `${R.intro} ${list.length} Orte mit Richtpreisen pro m² und kostenloser Besichtigung.`,
+    body: `${pageHead({ crumbs: `<a href="../../">Startseite</a> / <a href="../">Regionen</a> / ${esc(R.name)}`, h1: esc(R.titel), lead: esc(R.intro) })}
+  <div class="container">
+    <div class="tiles">${sorted.map(o => `<a class="tile" href="${o.slug}/">${esc(o.kurz || o.name)} <span>${rk === 'wien' ? bezirkNr(o) + '. Bezirk' : esc(o.typ) + ' · ~' + o.km + ' km von Wien'}</span></a>`).join('')}</div>
+    ${ctaBand('../../')}
+  </div>`
+  });
+}
+
+pages['regionen/index.html'] = layout({
+  depth: 1, active: 'regionen', pagePath: 'regionen/',
+  title: `Einsatzgebiete – Renovierung in Wien, Niederösterreich und Burgenland (${ORTE.length} Orte) | ANADRI`,
+  description: `ANADRI renoviert in ${ORTE.length} Orten: alle 23 Wiener Bezirke, das Wiener Umland in Niederösterreich und das Burgenland bis zur ungarischen Grenze. Kostenlose Besichtigung.`,
+  body: `${pageHead({ crumbs: '<a href="../">Startseite</a> / Regionen', h1: 'Wo wir arbeiten', lead: 'Von der Wiener Innenstadt über das Umland bis zum Neusiedler See und zur ungarischen Grenze: Wählen Sie Ihren Ort für Details, Richtpreise und typische Arbeiten in Ihrer Gegend. Die Besichtigung ist überall kostenlos.' })}
+  <div class="container">
+    <div class="zone-grid zone-grid--3">${Object.keys(REGIONEN).map(rk => `
+      <div class="zone-col card">
+        <h2><a href="${rk}/">${esc(REGIONEN[rk].name)}</a> <small>${byRegion(rk).length} Orte</small></h2>
+        <ul class="chips">${(rk === 'wien' ? byRegion(rk) : [...byRegion(rk)].sort((a, b) => a.km - b.km)).map(o => `<li><a href="${rk}/${o.slug}/">${esc(o.kurz || o.name)}</a></li>`).join('')}</ul>
+      </div>`).join('')}
+    </div>
+    ${ctaBand('../')}
+  </div>`
+});
+for (const rk of Object.keys(REGIONEN)) pages[`regionen/${rk}/index.html`] = regionPage(rk);
+for (const o of ORTE) pages[`regionen/${o.region}/${o.slug}/index.html`] = ortPage(o);
+
 for (const [file, html] of Object.entries(pages)) {
   const out = path.join(AT, file);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);
-  console.log('at/' + file.replace(/\\/g, '/'));
 }
+console.log(Object.keys(pages).length + ' Seiten in at/ geschrieben');
