@@ -1,0 +1,251 @@
+<!--
+  ╔═══════════════════════════════════════════════════════════════════╗
+  ║  ANADRI CONSULTING RO SRL — Website                              ║
+  ║  Created by: Droc1989                                            ║
+  ║  For: Adrian Brusturean                                          ║
+  ║  Date: 2026-10-06                                                ║
+  ╚═══════════════════════════════════════════════════════════════════╝
+-->
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ANADRI CONSULTING — Renovierungen & Dacharbeiten | Österreich</title>
+<style>
+:root{
+  --blue:#0a5ba8; --navy:#0f1e2e; --red:#c41e3a; --soft:#eef7fb;
+  --text:#0d1d2a; --muted:#66727c; --line:#dce3e7; --white:#fff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Segoe UI',Inter,Arial,sans-serif;color:var(--text);background:#fff}
+.container{max-width:1180px;margin:auto;padding:0 28px}
+header{height:74px;display:flex;align-items:center;border-bottom:1px solid #eef1f3;background:#fff;position:sticky;top:0;z-index:20}
+nav{display:flex;gap:22px;align-items:center;margin-left:auto;font-size:14px}
+nav a{color:var(--text);text-decoration:none}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--red)}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:var(--red)}
+.lang-switch{margin-left:20px;padding-left:20px;border-left:1px solid #ddd}
+.lang-switch a{font-size:12px;color:#999;text-decoration:none;padding:0 8px}
+.lang-switch a.active{color:var(--red);font-weight:600}
+.btn{display:inline-block;padding:13px 18px;border-radius:11px;background:var(--red);color:#fff;text-decoration:none;font-weight:700;border:1px solid transparent;cursor:pointer}
+.btn.blue{background:var(--blue)}
+.btn.outline{background:#fff;color:var(--red);border-color:var(--red)}
+.hero{background:var(--navy);color:white;padding:56px 0 58px}
+.badge{display:inline-block;padding:8px 12px;border-radius:999px;background:var(--red);font-size:12px;font-weight:800}
+.hero h1{font-size:54px;line-height:1.08;max-width:920px;margin:24px 0 14px}
+.hero p{font-size:18px;color:#cfdae2;max-width:760px}
+.actions{display:flex;gap:12px;margin-top:28px}
+.section{padding:54px 0}
+.section.soft{background:var(--soft)}
+.section.dark{background:var(--navy);color:white}
+h2{font-size:36px;margin:0 0 26px}
+.grid2,.calc,.contact{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:#f6f8f9;border-radius:16px;padding:22px}
+.card h3{font-size:26px;margin:14px 0 8px}
+.small{font-size:14px;color:var(--muted)}
+.market-tag{display:inline-block;padding:7px 12px;border-radius:999px;color:white;font-weight:800;font-size:12px;background:var(--red)}
+.calc .form,.calc .result{border-radius:18px;padding:24px}
+.form{background:#fff}
+.result{background:#101417;color:white}
+.field{background:#f5f7f9;border-radius:10px;padding:14px;margin:10px 0;color:#66727c}
+.price{font-size:34px;font-weight:800;margin:12px 0}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.service{background:#f5f7f9;border-radius:14px;padding:20px;cursor:pointer;transition:all 0.3s}
+.service:hover{background:#ffe8e8;transform:translateY(-4px);box-shadow:0 8px 16px rgba(0,0,0,0.1)}
+.service-img{width:100%;height:200px;background:#ddd;border-radius:10px;margin-bottom:15px;display:flex;align-items:center;justify-content:center;color:#999;font-size:13px}
+.num{display:inline-block;background:var(--red);color:#fff;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:700}
+.contact .left,.contact .right{border-radius:16px;padding:22px}
+.contact .left{background:#fff}
+.contact .right{background:var(--red);color:white}
+footer{background:#080d11;color:#fff;padding:32px 0}
+footer .muted{color:#9da7ae;font-size:13px}
+footer a{color:#fff;text-decoration:none}
+@media(max-width:900px){
+  nav a{display:none}
+  .hero h1{font-size:40px}
+  .grid2,.calc,.contact{grid-template-columns:1fr}
+  .services{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .container{padding:0 18px}
+  header{height:66px}
+  nav .btn{padding:10px 12px;font-size:13px}
+  .hero{padding:40px 0}
+  .hero h1{font-size:34px}
+  h2{font-size:29px}
+  .services{grid-template-columns:1fr}
+  .actions{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container" style="width:100%;display:flex;align-items:center">
+    <div class="logo"><span class="logo-mark"></span>ANADRI</div>
+    <nav>
+      <a href="#leistungen">Leistungen</a><a href="#kalkulator">Kalkulator</a>
+      <a href="#referenzen">Referenzen</a><a href="#uber-uns">Über uns</a>
+      <a href="#kontakt">Kontakt</a>
+      <div class="lang-switch">
+        <a href="anadri_romania.html">RO</a>
+        <a class="active" href="#at">DE</a>
+      </div>
+      <a class="btn" href="#kontakt">Angebot anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <span class="badge">RENOVIERUNGEN & DACHARBEITEN — ÖSTERREICH</span>
+    <h1>Professionelle Renovierungen und Dacharbeiten in Österreich und Rumänien.</h1>
+    <p>20+ Jahre Erfahrung in hochwertigen Renovierungsprojekten. Von Fassadensanierung über Wärmedämmung bis zu modernen Dachsystemen — alles aus einer Hand.</p>
+    <div class="actions"><a class="btn" href="#kontakt">Angebot anfragen</a><a class="btn outline" href="#kalkulator">Preiskalkulator</a></div>
+  </div>
+</section>
+
+<section class="section" id="leistungen">
+  <div class="container">
+    <h2>Unsere Leistungen</h2>
+    <div class="services">
+      <div class="service" onclick="selectService('Fassadensanierung', 120)">
+        <div class="service-img">🏢 Fassadensanierung</div>
+        <span class="num">01</span><h3>Fassadensanierung</h3><p class="small">Wärmedämmung, Anstriche, Verkleidung</p>
+      </div>
+      <div class="service" onclick="selectService('Dacharbeiten', 140)">
+        <div class="service-img">🏠 Dachdeckung</div>
+        <span class="num">02</span><h3>Dacharbeiten</h3><p class="small">Neudeckung, Reparatur, Flachdächer</p>
+      </div>
+      <div class="service" onclick="selectService('Innenrenovierung', 110)">
+        <div class="service-img">🔧 Innenausbau</div>
+        <span class="num">03</span><h3>Innenrenovierung</h3><p class="small">Bäder, Küchen, Elektrik, Heizung</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section soft" id="kalkulator">
+  <div class="container">
+    <h2>Preiskalkulator</h2>
+    <div class="calc">
+      <div class="form">
+        <span class="market-tag">KOSTENLOSE SCHÄTZUNG</span>
+        <h3 id="calcTitle">Projektdetails eingeben</h3>
+        
+        <div style="margin:15px 0">
+          <label style="font-weight:600;font-size:13px">Art der Renovierung</label>
+          <select id="serviceType" style="width:100%;padding:12px;border-radius:8px;border:1px solid #ddd;font-size:14px;margin-top:8px" onchange="calculatePrice()">
+            <option value="">-- Wählen Sie Leistung --</option>
+            <option value="Fassadensanierung|120">Fassadensanierung (120€/m²)</option>
+            <option value="Dacharbeiten|140">Dacharbeiten (140€/m²)</option>
+            <option value="Innenrenovierung|110">Innenrenovierung (110€/m²)</option>
+          </select>
+        </div>
+
+        <div style="margin:15px 0">
+          <label style="font-weight:600;font-size:13px">Fläche (m²)</label>
+          <input type="number" id="surface" placeholder="Z.B. 100" style="width:100%;padding:12px;border-radius:8px;border:1px solid #ddd;font-size:14px;margin-top:8px" onchange="calculatePrice()" min="10" value="100">
+        </div>
+
+        <div style="margin:15px 0">
+          <label style="font-weight:600;font-size:13px">Qualitätsstufe</label>
+          <select id="stage" style="width:100%;padding:12px;border-radius:8px;border:1px solid #ddd;font-size:14px;margin-top:8px" onchange="calculatePrice()">
+            <option value="0.9">Standard - 90%</option>
+            <option value="1">Premium - 100%</option>
+            <option value="1.25">Luxury - 125%</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="result">
+        <div style="font-size:12px;font-weight:800">KOSTENSCHÄTZUNG</div>
+        <div class="price" id="priceDisplay">0 €</div>
+        <div style="color:#d7dee3" id="priceRange">Wählen Sie Leistung für Schätzung</div>
+        <p style="color:#bbc5cc">Diese Schätzung ist orientierend. Finales Angebot nach Besichtigung vor Ort.</p>
+        <a class="btn" href="#kontakt">Weitere Informationen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="uber-uns">
+  <div class="container">
+    <h2>Qualität und Erfahrung</h2>
+    <p style="color:#666;max-width:700px;margin-bottom:30px"><strong>ANADRI CONSULTING</strong> arbeitet nach österreichischen Baustandards. Wir bieten: ✓ Kostenlose Vor-Ort-Analyse · ✓ Detaillierte Angebote · ✓ Garantie auf Materialien und Verarbeitung · ✓ Pünktliche Fertigstellung · ✓ Zuverlässige Kommunikation auf Deutsch.</p>
+  </div>
+</section>
+
+<section class="section dark" id="referenzen">
+  <div class="container">
+    <h2>Referenzen und Zertifikate</h2>
+    <p>Mehr als 50 abgeschlossene Projekte in Wien, Oberösterreich und anderen Bundesländern. Alle Arbeiten erfüllen aktuelle österreichische Bauvorschriften und Energiestandards.</p>
+  </div>
+</section>
+
+<section class="section soft" id="kontakt">
+  <div class="container">
+    <div class="contact">
+      <div class="left">
+        <h2>Anfrage senden</h2>
+        <div class="field">Name / Firma</div>
+        <div class="field">Telefon</div>
+        <div class="field">E-Mail</div>
+        <div class="field">Projektbeschreibung</div>
+        <a class="btn" href="mailto:info@anadri.ro">Nachricht senden</a>
+      </div>
+      <div class="right">
+        <h2>Direkter Kontakt</h2>
+        <p><strong>ANADRI CONSULTING SRL</strong></p>
+        <p>Biled, Timiș<br>Rumänien</p>
+        <p style="margin-top:20px"><strong>Telefon:</strong> +40 XXX XXX XXX<br><strong>WhatsApp:</strong> +40 XXX XXX XXX<br><strong>E-Mail:</strong> info@anadri.ro</p>
+        <p style="margin-top:20px;font-size:13px">Wir sprechen Deutsch und Rumänisch. Schnelle Antworten gewährleistet.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <strong>ANADRI CONSULTING SRL</strong>
+    <p class="muted">Renovierungen · Dacharbeiten · Fassaden · Wärmedämmung · Österreich · Rumänien</p>
+    <hr style="border:0;border-top:1px solid #2c3338">
+    <div class="muted">© 2026 ANADRI CONSULTING SRL · <a href="#">Datenschutz</a> · <a href="#">Impressum</a></div>
+    <div class="muted" style="margin-top:16px;font-size:12px">Created by <strong>Droc1989</strong> for <strong>Adrian Brusturean</strong></div>
+  </div>
+</footer>
+<script>
+function selectService(serviceName, basePrice) {
+  document.getElementById('serviceType').value = serviceName + '|' + basePrice;
+  document.getElementById('calcTitle').textContent = serviceName;
+  document.getElementById('surface').value = 100;
+  document.getElementById('stage').value = '1';
+  calculatePrice();
+  document.getElementById('kalkulator').scrollIntoView({ behavior: 'smooth' });
+}
+
+function calculatePrice() {
+  const serviceType = document.getElementById('serviceType').value;
+  const surface = parseFloat(document.getElementById('surface').value) || 0;
+  const stage = parseFloat(document.getElementById('stage').value) || 1;
+  
+  if (!serviceType || surface <= 0) {
+    document.getElementById('priceDisplay').textContent = '0 €';
+    document.getElementById('priceRange').textContent = 'Wählen Sie Leistung und Fläche für Schätzung';
+    return;
+  }
+
+  const [service, basePrice] = serviceType.split('|');
+  const pricePerM2 = parseFloat(basePrice);
+  const totalPrice = surface * pricePerM2 * stage;
+  const minPrice = totalPrice * 0.90;
+  const maxPrice = totalPrice * 1.10;
+
+  document.getElementById('priceDisplay').textContent = Math.round(totalPrice).toLocaleString('de-DE') + ' €';
+  document.getElementById('priceRange').textContent = Math.round(minPrice).toLocaleString('de-DE') + ' – ' + Math.round(maxPrice).toLocaleString('de-DE') + ' € (Schätzung ±10%)';
+}
+</script>
+</body>
+</html>
