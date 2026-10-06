@@ -202,7 +202,7 @@ pages['index.html'] = layout({
   depth: 0, active: '',
   title: 'ANADRI – Construcții case, renovări și acoperișuri în Timiș | Preț clar pe m²',
   description: 'Construim case de la roșu la cheie, renovăm și facem acoperișuri în Timiș și Banat. Calculează prețul orientativ în lei și cere o vizită gratuită.',
-  body: `<section class="hero${HERO_VIDEO ? ' hero--video' : ''}" aria-labelledby="hero-title">${HERO_VIDEO ? `<video class="hero-video" autoplay muted loop playsinline preload="metadata"${HERO_VIDEO.poster ? ` poster="./${HERO_VIDEO.poster}"` : ''} aria-hidden="true" tabindex="-1"><source src="./${HERO_VIDEO.src}" type="video/mp4"></video><div class="hero__overlay" aria-hidden="true"></div>` : ''}
+  body: `<section class="hero${HERO_VIDEO ? ' hero--video' : ''}" aria-labelledby="hero-title">${HERO_VIDEO ? `<video class="hero-video" autoplay muted loop playsinline preload="metadata"${HERO_VIDEO.poster ? ` poster="./${HERO_VIDEO.poster}"` : ''} aria-hidden="true" tabindex="-1"><source src="./${HERO_VIDEO.src}" type="video/mp4"></video>` : ''}
     <div class="container hero__inner">
       <div class="hero__text">
         <span class="hero__eyebrow">Construcții · Timiș și Banat</span>
@@ -213,13 +213,6 @@ pages['index.html'] = layout({
           <a class="btn btn--light" href="#contact">Vreau o vizită gratuită</a>
         </div>
       </div>
-      <aside class="hero__card" aria-label="Prețuri orientative pe m²">
-        <div class="hero__card-head"><span>Prețuri orientative / m²</span><span class="badge">Manoperă</span></div>
-        <ul>${preview.map(s => `
-          <li><a href="./calculator/?serviciu=${s.id}#rezultat"><span>${esc(s.name)}</span><b>${nf.format(s.min)}–${nf.format(s.max)} lei</b></a></li>`).join('')}
-        </ul>
-        <a class="hero__card-more" href="#servicii">Toate lucrările și prețurile →</a>
-      </aside>
     </div>
   </section>
 

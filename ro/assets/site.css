@@ -482,3 +482,15 @@ main > .section{padding:40px 0}
   .hero--video .hero__overlay{background:linear-gradient(180deg,rgba(11,42,91,.35) 0%,rgba(11,42,91,.08) 18%,rgba(11,42,91,.55) 34%,rgba(11,42,91,.9) 52%,rgba(11,42,91,.97) 100%)}
   .hero--video .hero__text{text-shadow:0 1px 3px rgba(0,0,0,.55)}
 }
+
+/* ---------- Video original: fără strat, fără filtru; textul pe un panou compact ---------- */
+.hero-video{filter:none}
+.hero__overlay{display:none}
+.hero__inner{grid-template-columns:1fr}
+.hero--video .hero__text{background:rgba(11,42,91,.84);border-radius:14px;padding:26px 24px;max-width:640px;text-shadow:none;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.hero--video .hero__text > p{color:#e6ecf5}
+@media(max-width:767px){
+  .hero--video .hero__inner{justify-content:flex-end;padding-bottom:20px}
+  .hero--video .hero__text{padding:20px 18px;border-radius:12px}
+}
+@media(min-width:1024px){ .hero--video .hero__text{padding:34px 32px} }

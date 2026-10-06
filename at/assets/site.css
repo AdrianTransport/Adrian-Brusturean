@@ -395,3 +395,15 @@ main > .section{padding:40px 0}
   .main-nav .nav-cta{padding:8px 12px;font-size:.86em;margin-left:4px}
   .header-inner{gap:14px}
 }
+
+/* ---------- Video original: ohne Abdunkelung; Text auf kompakter Fläche ---------- */
+.hero-video{filter:none}
+.hero__overlay{display:none}
+.hero__inner{grid-template-columns:1fr}
+.hero--video .hero__text{background:rgba(26,26,26,.84);border-radius:14px;padding:26px 24px;max-width:640px;box-shadow:0 16px 40px rgba(0,0,0,.3)}
+.hero--video .hero__text > p{color:#e6e6e6}
+@media(max-width:767px){
+  .hero--video .hero__inner{justify-content:flex-end;padding-bottom:20px}
+  .hero--video .hero__text{padding:20px 18px;border-radius:12px}
+}
+@media(min-width:1024px){ .hero--video .hero__text{padding:34px 32px} }

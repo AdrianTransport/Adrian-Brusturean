@@ -39,7 +39,7 @@ module.exports = function home({ r, LIST, REFS, START, HERO_VIDEO, esc, serviceC
         </figure>`;
   }).join('');
 
-  const video = HERO_VIDEO ? `<video class="hero-video" autoplay muted loop playsinline preload="metadata"${HERO_VIDEO.poster ? ` poster="${r}${HERO_VIDEO.poster}"` : ''} aria-hidden="true" tabindex="-1"><source src="${r}${HERO_VIDEO.src}" type="video/mp4"></video><div class="hero__overlay" aria-hidden="true"></div>` : '';
+  const video = HERO_VIDEO ? `<video class="hero-video" autoplay muted loop playsinline preload="metadata"${HERO_VIDEO.poster ? ` poster="${r}${HERO_VIDEO.poster}"` : ''} aria-hidden="true" tabindex="-1"><source src="${r}${HERO_VIDEO.src}" type="video/mp4"></video>` : '';
 
   return `<section class="hero${HERO_VIDEO ? ' hero--video' : ''}" aria-labelledby="hero-title">${video}
     <div class="container hero__inner">
@@ -52,13 +52,6 @@ module.exports = function home({ r, LIST, REFS, START, HERO_VIDEO, esc, serviceC
           <a class="btn btn--light" href="${r}leistungen/">Unsere Leistungen</a>
         </div>
       </div>
-      <aside class="hero__card" aria-label="Richtpreise pro m²">
-        <div class="hero__card-head"><span>Richtpreise pro m²</span><span class="badge">Nur Arbeitsleistung</span></div>
-        <ul>${preview.map(s => `
-          <li><a href="${r}leistungen/${s.id}/"><span>${esc(s.name)}</span><b>${s.min}–${s.max} €</b></a></li>`).join('')}
-        </ul>
-        <a class="hero__card-more" href="${r}leistungen/">Alle 9 Leistungen →</a>
-      </aside>
     </div>
   </section>
 
