@@ -21,6 +21,29 @@ const avg = s => (s.min + s.max) / 2;
 const LOGO = '<svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 54 32 12l22 42" fill="none" stroke="#c41e3a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="38" width="24" height="9" rx="2" fill="currentColor"/></svg>';
 const FIRMA = 'ANADRI CONSULTING RO SRL';
 const ADRESA = 'Sat Biled, nr. 404, 307060 Biled, jud. Timiș';
+// Video pe fundalul paginii de start: se folosește doar dacă există ro/assets/hero-images/hero.mp4 (+ hero.jpg ca poster)
+const HERO_VIDEO = fs.existsSync(path.join(RO, 'assets/hero-images/hero.mp4'))
+  ? { src: 'assets/hero-images/hero.mp4', poster: fs.existsSync(path.join(RO, 'assets/hero-images/hero.jpg')) ? 'assets/hero-images/hero.jpg' : null }
+  : null;
+// Adresa publică a site-ului (pentru og:image, canonical, date structurate). De schimbat când se leagă domeniul propriu.
+const SITE_URL = 'https://adrianbrusturean.netlify.app';
+// Date structurate pentru Google (logo, firmă, adresă)
+const ORG = {
+  '@context': 'https://schema.org',
+  '@type': 'HomeAndConstructionBusiness',
+  name: 'ANADRI Construcții',
+  legalName: FIRMA,
+  url: SITE_URL + '/ro/',
+  logo: SITE_URL + '/ro/assets/logo/logo-full.png',
+  image: SITE_URL + '/ro/assets/logo/og-image.jpg',
+  email: EMAIL,
+  foundingDate: '2014-01-30',
+  taxID: 'RO32724443',
+  address: { '@type': 'PostalAddress', streetAddress: 'Sat Biled, nr. 404', postalCode: '307060', addressLocality: 'Biled', addressRegion: 'Timiș', addressCountry: 'RO' },
+  areaServed: ['Timiș', 'Banat', 'Timișoara'],
+  priceRange: 'lei/m²',
+  sameAs: []
+};
 
 const NAV = [
   { key: 'servicii', href: '#servicii', label: 'Servicii' },
@@ -47,7 +70,7 @@ const FAQ = [
 ];
 
 // ---------- Layout ----------
-function layout({ depth, active, title, description, body, scripts = [], noindex = false }) {
+function layout({ depth, active, title, description, body, scripts = [], noindex = false, pagePath = '' }) {
   const r = depth ? '../'.repeat(depth) : './';
   const home = depth ? r : './';
   const nav = NAV.map(n => {
@@ -62,18 +85,35 @@ function layout({ depth, active, title, description, body, scripts = [], noindex
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
-${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta name="theme-color" content="#0f1e2e">
+${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta name="theme-color" content="#0b2a5b">
+<link rel="canonical" href="${SITE_URL}/ro/${pagePath}">
 <link rel="alternate" hreflang="ro" href="${home}">
 <link rel="alternate" hreflang="de-AT" href="${r}../at/">
-<link rel="icon" type="image/svg+xml" href="${r}../at/assets/logo/icon.svg">
-<link rel="apple-touch-icon" href="${r}../at/assets/logo/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="${r}assets/logo/icon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="${r}assets/logo/icon-192.png">
+<link rel="apple-touch-icon" href="${r}assets/logo/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ANADRI Construcții">
+<meta property="og:locale" content="ro_RO">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${SITE_URL}/ro/${pagePath}">
+<meta property="og:image" content="${SITE_URL}/ro/assets/logo/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ANADRI – Construcții România">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${esc(title)}">
+<meta name="twitter:description" content="${esc(description)}">
+<meta name="twitter:image" content="${SITE_URL}/ro/assets/logo/og-image.jpg">
 <link rel="stylesheet" href="${r}assets/site.css">
+<script type="application/ld+json">${JSON.stringify(ORG)}</script>
 </head>
 <body>
 <a class="skip" href="#continut">Sari la conținut</a>
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="${home}" aria-label="ANADRI – pagina principală">${LOGO}<span>ANADRI<small>Construcții · România</small></span></a>
+    <a class="brand" href="${home}" aria-label="ANADRI – pagina principală"><img src="${r}assets/logo/logo-mark.png" width="512" height="512" alt="" decoding="async"><span class="brand__text">ANADRI<small>Construcții · România</small></span></a>
     <nav class="main-nav" id="main-nav" aria-label="Meniu principal">
       <ul>${nav}</ul>
       <a class="btn btn--red nav-cta" href="${home}#contact">Vizită gratuită</a>
@@ -89,7 +129,7 @@ ${body}
   <div class="container">
     <div class="footer-grid">
       <div>
-        <a class="brand" href="${home}">${LOGO}<span>ANADRI<small>Construcții · România</small></span></a>
+        <a class="brand" href="${home}" aria-label="ANADRI – pagina principală"><img src="${r}assets/logo/logo-full.png" width="800" height="635" alt="ANADRI – Construcții România" loading="lazy" decoding="async"><span class="brand__text">ANADRI<small>Construcții · România</small></span></a>
         <p>Construcții de case, renovări și acoperișuri în Timiș și Banat. Preț clar pe metru pătrat, vizită gratuită.</p>
         <p><a class="btn btn--red" href="${r}calculator/">Calculează prețul</a></p>
       </div>
@@ -162,7 +202,7 @@ pages['index.html'] = layout({
   depth: 0, active: '',
   title: 'ANADRI – Construcții case, renovări și acoperișuri în Timiș | Preț clar pe m²',
   description: 'Construim case de la roșu la cheie, renovăm și facem acoperișuri în Timiș și Banat. Calculează prețul orientativ în lei și cere o vizită gratuită.',
-  body: `<section class="hero" aria-labelledby="hero-title">
+  body: `<section class="hero${HERO_VIDEO ? ' hero--video' : ''}" aria-labelledby="hero-title">${HERO_VIDEO ? `<video class="hero-video" autoplay muted loop playsinline preload="metadata"${HERO_VIDEO.poster ? ` poster="./${HERO_VIDEO.poster}"` : ''} aria-hidden="true" tabindex="-1"><source src="./${HERO_VIDEO.src}" type="video/mp4"></video><div class="hero__overlay" aria-hidden="true"></div>` : ''}
     <div class="container hero__inner">
       <div class="hero__text">
         <span class="hero__eyebrow">Construcții · Timiș și Banat</span>
@@ -317,7 +357,7 @@ pages['index.html'] = layout({
 
 // ---------- Calculator ----------
 pages['calculator/index.html'] = layout({
-  depth: 1, active: 'calculator',
+  depth: 1, active: 'calculator', pagePath: 'calculator/',
   title: 'Calculator preț construcții și renovări – lei/m² | ANADRI',
   description: 'Alege lucrările, introdu suprafața și vezi pe loc prețul orientativ în lei pentru manoperă. Trimite estimarea și primești o vizită gratuită.',
   scripts: ['servicii.js', 'calculator.js'],
