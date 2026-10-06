@@ -1,10 +1,10 @@
-// Efect „ciocan”: la clic pe un card, cardul se sparge în cioburi și apoi se deschide pagina lui.
+// Efect „ciocan”: la clic pe un card, cardul devine un zid de cărămizi care se prăbușește, apoi se deschide pagina lui.
 // Se aplică pe carduri (.svc, .ref, .value, .steps li, rândurile din cardul de prețuri din hero).
 // NU se aplică pe header, meniu și butoanele din banner.
 (function () {
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var CARDS = '.svc, .ref, .value, .steps li, .hero__card li';
-  var DURATION = 420;   // ms până la navigare
+  var DURATION = 520;   // ms până la navigare
 
   document.querySelectorAll(CARDS).forEach(function (card) {
     var link = card.matches('a[href]') ? card : card.querySelector('a[href]');
@@ -57,43 +57,48 @@
     }
     document.body.appendChild(svg); made.push(svg);
 
-    // 2. Cioburi: grilă 4×3 cu colțuri deplasate aleator, fiecare o clonă decupată a cardului
-    var cols = 4, rows = 3, pts = [];
-    for (var i = 0; i <= cols; i++) {
-      pts[i] = [];
-      for (var j = 0; j <= rows; j++) {
-        var px = i / cols * 100, py = j / rows * 100;
-        if (i > 0 && i < cols) px += rnd(-9, 9);
-        if (j > 0 && j < rows) py += rnd(-12, 12);
-        pts[i][j] = [px, py];
+    // 2. Cărămizi: zid cu rânduri decalate, în culori de teracotă, care zboară din punctul lovit
+    var wall = document.createElement('div');
+    wall.className = 'bricks';
+    wall.style.left = r.left + 'px'; wall.style.top = r.top + 'px';
+    wall.style.width = r.width + 'px'; wall.style.height = r.height + 'px';
+    var COLORS = ['#b7542e', '#a94a28', '#c4663b', '#9e4426', '#bf5c33'];
+    var rows = Math.max(3, Math.round(r.height / 30)), bh = r.height / rows;
+    var bw = Math.min(bh * 2.3, r.width / 2), gap = 2;
+    var bricks = [];
+    for (var j = 0; j < rows; j++) {
+      var offset = (j % 2) ? bw / 2 : 0;
+      for (var bx = -offset; bx < r.width; bx += bw) {
+        var left = Math.max(0, bx), right = Math.min(r.width, bx + bw);
+        if (right - left < 6) continue;
+        var el = document.createElement('div');
+        el.className = 'brick';
+        el.style.left = left + 'px'; el.style.top = (j * bh) + 'px';
+        el.style.width = (right - left - gap) + 'px'; el.style.height = (bh - gap) + 'px';
+        el.style.setProperty('--brick', COLORS[Math.floor(Math.random() * COLORS.length)]);
+        var bcx = r.left + (left + right) / 2, bcy = r.top + j * bh + bh / 2;
+        var dist = Math.hypot(bcx - x, bcy - y) || 1;
+        var force = Math.max(0.3, 1 - dist / Math.max(r.width, r.height));
+        bricks.push({ el: el, delay: Math.min(140, dist / 4),
+          dx: (bcx - x) / dist * rnd(50, 140) * force + rnd(-20, 20),
+          dy: (bcy - y) / dist * rnd(20, 70) * force + rnd(90, 220),
+          rot: rnd(-70, 70) * force });
+        wall.appendChild(el);
       }
     }
-    var shards = [];
-    for (i = 0; i < cols; i++) for (j = 0; j < rows; j++) {
-      var poly = [pts[i][j], pts[i + 1][j], pts[i + 1][j + 1], pts[i][j + 1]];
-      var clone = card.cloneNode(true);
-      clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
-      clone.className = card.className.replace(/\bbreakable\b/, '') + ' shard';
-      clone.style.left = r.left + 'px'; clone.style.top = r.top + 'px';
-      clone.style.width = r.width + 'px'; clone.style.height = r.height + 'px';
-      clone.style.clipPath = 'polygon(' + poly.map(function (q) { return q[0] + '% ' + q[1] + '%'; }).join(',') + ')';
-      var ccx = r.left + (poly[0][0] + poly[2][0]) / 200 * r.width, ccy = r.top + (poly[0][1] + poly[2][1]) / 200 * r.height;
-      var dist = Math.hypot(ccx - x, ccy - y) || 1;
-      var force = Math.max(0.35, 1 - dist / Math.max(r.width, r.height));
-      shards.push({ el: clone, dx: (ccx - x) / dist * rnd(40, 110) * force + rnd(-15, 15), dy: (ccy - y) / dist * rnd(20, 60) * force + rnd(70, 160), rot: rnd(-45, 45) * force });
-      document.body.appendChild(clone); made.push(clone);
-    }
+    document.body.appendChild(wall); made.push(wall);
     card.classList.add('is-breaking');
 
-    // Forțează așezarea cioburilor, apoi pornește animația
-    void shards[0].el.offsetWidth;
+    // Zidul apare pe loc, apoi cărămizile zboară – cele de lângă lovitură primele
+    void wall.offsetWidth;
     setTimeout(function () {
-      shards.forEach(function (s) {
-        s.el.style.transform = 'translate(' + s.dx + 'px,' + s.dy + 'px) rotate(' + s.rot + 'deg) scale(.92)';
-        s.el.style.opacity = '0';
+      bricks.forEach(function (b) {
+        b.el.style.transitionDelay = Math.round(b.delay) + 'ms';
+        b.el.style.transform = 'translate(' + b.dx + 'px,' + b.dy + 'px) rotate(' + b.rot + 'deg)';
+        b.el.style.opacity = '0';
       });
       svg.style.opacity = '0';
-    }, 30);
+    }, 40);
 
     setTimeout(done, DURATION);
     setTimeout(function () {
