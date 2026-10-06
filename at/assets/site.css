@@ -331,3 +331,36 @@ main > .section{padding:40px 0}
   .hero__inner{grid-template-columns:1.25fr 1fr;gap:56px}
   .hero{padding:88px 0 96px}
 }
+
+/* ---------- Startseite: Zahlen, Warum ANADRI, Kundenstimmen ---------- */
+.ph-flag{position:absolute;top:10px;right:10px;background:#fff3cd;color:#7a5b00;font-size:.68em;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+.is-ph{position:relative}
+.trust__grid--numbers{grid-template-columns:1fr 1fr;gap:20px 16px}
+.trust__grid--numbers div{border-left:3px solid var(--red);padding:2px 0 2px 14px;position:relative}
+.trust__grid--numbers b{display:block;font-size:1.9em;line-height:1.05;color:var(--navy);letter-spacing:-.01em}
+.trust__grid--numbers span{display:block;font-size:.85em;color:var(--muted);margin-top:4px;line-height:1.35}
+.trust__grid--numbers .ph-flag{position:static;display:inline-block;margin-top:6px}
+.why-grid{display:grid;gap:14px}
+.why{background:#fff;border-radius:var(--radius);padding:22px;box-shadow:0 4px 15px rgba(0,0,0,.06);border-top:4px solid var(--red)}
+.why__icon{width:48px;height:48px;border-radius:12px;background:#fff0f2;color:var(--red);display:grid;place-items:center;margin-bottom:14px}
+.why__icon svg{width:26px;height:26px}
+.why h3{margin:0 0 6px;font-size:1.1em;color:var(--navy)}
+.why p{margin:0;color:var(--muted);font-size:.95em}
+.quotes{display:grid;gap:14px}
+.quote{margin:0;background:var(--bg);border:1px solid #e8e8e8;border-radius:var(--radius);padding:22px;display:flex;flex-direction:column}
+.quote__stars{display:flex;gap:2px;color:#e0a800;margin-bottom:10px}
+.quote__stars svg{width:18px;height:18px;fill:currentColor}
+.quote blockquote{margin:0 0 16px;flex:1}
+.quote blockquote p{margin:0;color:var(--text);font-size:1em;line-height:1.55}
+.quote figcaption{display:flex;align-items:center;gap:12px}
+.quote__avatar{width:44px;height:44px;border-radius:50%;background:#d9d9d9;color:#555;font-weight:800;font-size:.9em;display:grid;place-items:center;flex:none}
+.quote figcaption b{display:block;color:var(--navy);line-height:1.2}
+.quote figcaption small{display:block;color:var(--muted);font-size:.82em;margin-top:2px}
+.quote figcaption small a{color:var(--muted)}
+.quote figcaption small a:hover{color:var(--red)}
+@media(min-width:560px){ .why-grid,.quotes{grid-template-columns:1fr 1fr} }
+@media(min-width:768px){
+  .trust__grid--numbers{grid-template-columns:repeat(4,1fr)}
+  .trust__grid--numbers b{font-size:2.3em}
+}
+@media(min-width:1024px){ .why-grid,.quotes{grid-template-columns:repeat(4,1fr)} }

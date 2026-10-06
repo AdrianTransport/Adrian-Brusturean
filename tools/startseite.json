@@ -1,0 +1,71 @@
+{
+  "_hinweis": "Inhalte der Startseite. Alles mit platzhalter=true wird auf der Website sichtbar als PLATZHALTER markiert. Durch echte Kundenstimmen, echte Zahlen und echte Zertifikate ersetzen, dann platzhalter entfernen.",
+
+  "kundenstimmen": [
+    {
+      "platzhalter": true,
+      "name": "Maria K.",
+      "ort": "Wien",
+      "sterne": 5,
+      "leistung": "innenrenovierung",
+      "zitat": "Besichtigung am Montag, Angebot am Dienstag, Baustart in der Woche darauf. Nach drei Wochen war alles fertig – zum vereinbarten Preis, ohne versteckte Positionen."
+    },
+    {
+      "platzhalter": true,
+      "name": "Stefan M.",
+      "ort": "Salzburg",
+      "sterne": 5,
+      "leistung": "dacharbeiten",
+      "zitat": "Rückmeldung innerhalb von 24 Stunden, saubere Arbeit und ein Ansprechpartner, der auf jedes Detail geachtet hat. Das Dach ist dicht, die Baustelle war jeden Abend aufgeräumt."
+    },
+    {
+      "platzhalter": true,
+      "name": "Anna L.",
+      "ort": "Innsbruck",
+      "sterne": 5,
+      "leistung": "fliesen-bodenbelag",
+      "zitat": "Man merkt die Erfahrung in jedem Detail – gerade Fugen, saubere Abschlüsse, mitgedacht bei den Anschlüssen. Wir würden ANADRI jederzeit wieder beauftragen."
+    },
+    {
+      "platzhalter": true,
+      "name": "Thomas W.",
+      "ort": "Linz",
+      "sterne": 5,
+      "leistung": "fassade-waermedaemmung",
+      "zitat": "Klare Kommunikation von Anfang bis Ende und eine schriftliche Garantie auf die Arbeiten. Seit der Dämmung sind die Heizkosten spürbar gesunken."
+    }
+  ],
+
+  "warum": [
+    {
+      "icon": "search",
+      "titel": "Transparente Preise",
+      "text": "Richtpreise pro m² schon online, schriftliches Angebot vor Baubeginn – ohne versteckte Kosten."
+    },
+    {
+      "icon": "bolt",
+      "titel": "Schnelle Rückmeldung",
+      "text": "Wir melden uns innerhalb von 24 Stunden und legen den Zeitplan gemeinsam mit Ihnen fest.",
+      "platzhalter": true
+    },
+    {
+      "icon": "award",
+      "titel": "Über 20 Jahre Erfahrung",
+      "text": "Mehr als 200 abgeschlossene Projekte in Österreich und Rumänien – vom Dach bis zum Boden.",
+      "platzhalter": true
+    },
+    {
+      "icon": "shield",
+      "titel": "10 Jahre Garantie",
+      "text": "Schriftliche Garantie auf unsere Arbeiten und Ansprechpartner auch nach der Übergabe.",
+      "platzhalter": true
+    }
+  ],
+
+  "vertrauen": [
+    { "zahl": "20+", "text": "Jahre Erfahrung in Renovierung und Dacharbeiten", "platzhalter": true },
+    { "zahl": "200+", "text": "erfolgreich abgeschlossene Projekte", "platzhalter": true },
+    { "zahl": "ÖVE", "text": "zertifizierte Elektroinstallation", "platzhalter": true },
+    { "zahl": "9", "text": "Gewerke aus einer Hand" }
+  ]
+}

@@ -3,6 +3,7 @@
 // Preise:      at/assets/leistungen.js
 // Startseite:  tools/template/home.js
 // Referenzen:  tools/referenzen.json  (Bilder nach at/referenzen/bilder/)
+// Startseite-Inhalte (Kundenstimmen, Warum, Zahlen): tools/startseite.json
 //
 // Seiten:  /  ·  /kalkulator/  ·  /leistungen/  ·  /leistungen/<id>/  ·  /referenzen/
 //          /ablauf/  ·  /uber-uns/  ·  /kontakt/  ·  /impressum/  ·  /datenschutz/
@@ -22,6 +23,7 @@ vm.runInNewContext(fs.readFileSync(path.join(AT, 'assets/leistungen.js'), 'utf8'
 const LIST = sandbox.window.ANADRI_LEISTUNGEN;
 const EMAIL = sandbox.window.ANADRI_EMAIL;
 const REFS = JSON.parse(fs.readFileSync(path.join(__dirname, 'referenzen.json'), 'utf8'));
+const START = JSON.parse(fs.readFileSync(path.join(__dirname, 'startseite.json'), 'utf8'));
 const byId = Object.fromEntries(LIST.map(s => [s.id, s]));
 
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -225,7 +227,7 @@ pages['index.html'] = layout({
   depth: 0, active: '',
   title: 'ANADRI — Renovierung & Ausbau in Österreich mit klaren Preisen',
   description: 'Abbruch, Innenrenovierung, Fassade, Dach, Elektro, Sanitär, Maler, Trockenbau und Fliesen in Österreich. Richtpreise online berechnen, kostenlose Besichtigung.',
-  body: home({ r: './', LIST, REFS, esc, serviceCards, stepsList, ctaBand, refCard })
+  body: home({ r: './', LIST, REFS, START, esc, serviceCards, stepsList, ctaBand, refCard })
 });
 
 pages['kalkulator/index.html'] = layout({
