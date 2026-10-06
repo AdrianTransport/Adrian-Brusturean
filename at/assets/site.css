@@ -16,9 +16,9 @@ img,svg{display:block;max-width:100%}
 /* ---------- Header ---------- */
 .site-header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-bottom:1px solid #e6e6e6}
 .header-inner{display:flex;align-items:center;gap:12px;height:var(--header)}
-.brand{display:flex;align-items:center;gap:10px;color:var(--dark);text-decoration:none;font-weight:800;letter-spacing:.06em;line-height:1.1;margin-right:auto}
-.brand svg{width:36px;height:36px;flex:none}
-.brand small{display:block;font-size:.62em;font-weight:600;letter-spacing:.08em;color:var(--red);text-transform:uppercase}
+.brand{display:flex;align-items:center;gap:10px;color:var(--navy);text-decoration:none;font-weight:800;font-size:1.25em;letter-spacing:.12em;line-height:1;margin-right:auto}
+.brand svg{width:42px;height:42px;flex:none}
+.brand small{display:block;font-size:.5em;font-weight:600;letter-spacing:.16em;color:var(--red);text-transform:uppercase;margin-top:4px}
 .lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;font-size:13px;font-weight:700;background:#fff;flex:none}
 .lang a,.lang span{padding:6px 10px;text-decoration:none;line-height:1.2}
 .lang span{background:var(--red);color:#fff}
@@ -385,3 +385,13 @@ main > .section{padding:40px 0}
   .hero--video .hero__card li a{padding:9px 0}
 }
 @media(min-width:768px){ .hero--video{min-height:600px} }
+
+/* Header: nichts umbrechen; zwischen 1024 und 1199px kompakter */
+.brand small,.main-nav li a,.main-nav .nav-cta{white-space:nowrap}
+@media(min-width:1024px) and (max-width:1199px){
+  .brand small{display:none}
+  .main-nav ul{gap:0}
+  .main-nav li a{padding:8px 9px;font-size:.9em}
+  .main-nav .nav-cta{padding:8px 12px;font-size:.86em;margin-left:4px}
+  .header-inner{gap:14px}
+}

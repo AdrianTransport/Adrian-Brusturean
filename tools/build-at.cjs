@@ -35,7 +35,8 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 const nf2 = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 2 });
 const avg = s => (s.min + s.max) / 2;
 
-const LOGO = '<svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#c41e3a"/><path d="M8 30 20 9l12 21h-5.2L20 18.4 13.2 30Z" fill="#fff"/><path d="M16.4 25h7.2" stroke="#fff" stroke-width="2.6"/></svg>';
+// Logo: Giebel-A in Rot, Querbalken in der Textfarbe (dunkel im Header, weiß im Footer). Dateien: at/assets/logo/
+const LOGO = '<svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 54 32 12l22 42" fill="none" stroke="#c41e3a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><rect x="20" y="38" width="24" height="9" rx="2" fill="currentColor"/></svg>';
 
 const NAV = [
   { key: 'leistungen', href: 'leistungen/', label: 'Leistungen' },
@@ -134,6 +135,8 @@ function layout({ depth, active, title, description, body, scripts = [], noindex
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 ${noindex ? '<meta name="robots" content="noindex">\n' : ''}<meta name="theme-color" content="#1a1a1a">
+<link rel="icon" type="image/svg+xml" href="${r}assets/logo/icon.svg">
+<link rel="apple-touch-icon" href="${r}assets/logo/apple-touch-icon.png">
 <link rel="stylesheet" href="${r}assets/site.css">
 </head>
 <body${bodyClass ? ` class="${bodyClass}"` : ''}>
