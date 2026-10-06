@@ -373,3 +373,15 @@ main > .section{padding:40px 0}
 @media(min-width:421px){ .hero--video{min-height:400px} }
 @media(min-width:769px){ .hero--video{min-height:600px} }
 @media(prefers-reduced-motion:reduce){ .hero-video{display:none} }
+
+/* Hero-Video auf dem Telefon: Hochformat-Video füllt den ersten Bildschirm, Text unten */
+.hero--video{min-height:calc(100vh - var(--header));min-height:calc(100svh - var(--header))}
+@media(max-width:767px){
+  .hero--video{padding:0;align-items:stretch}
+  .hero--video .hero__inner{display:flex;flex-direction:column;justify-content:flex-end;gap:18px;min-height:calc(100vh - var(--header));min-height:calc(100svh - var(--header));padding-top:28px;padding-bottom:24px}
+  .hero--video .hero__overlay{background:linear-gradient(180deg,rgba(26,26,26,.5) 0%,rgba(26,26,26,.1) 28%,rgba(26,26,26,.3) 50%,rgba(26,26,26,.9) 78%,rgba(26,26,26,.97) 100%)}
+  .hero--video .hero__text > p{color:#e6e6e6}
+  .hero--video .hero__card{padding:16px}
+  .hero--video .hero__card li a{padding:9px 0}
+}
+@media(min-width:768px){ .hero--video{min-height:600px} }
