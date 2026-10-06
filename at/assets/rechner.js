@@ -88,7 +88,7 @@
     $('f-margin').value = margin;
     $('f-auto').value = 'Vielen Dank für Ihre Anfrage bei ANADRI! Hier ist Ihre unverbindliche Schätzung (nur Arbeitsleistung, Material nicht enthalten):\n\n' +
       summary + '\n\nMittelwert: ' + eur(total) + '\nSpannweite: ' + range + '\nMit Verhandlungsspielraum (±10%): ' + margin +
-      '\n\nWir melden uns in Kürze für eine kostenlose Besichtigung.\n\nANADRI CONSULTING SRL';
+      '\n\nWir melden uns in Kürze für eine kostenlose Besichtigung.\n\nANADRI CONSULTING RO SRL';
   }
 
   list.addEventListener('change', function (e) {

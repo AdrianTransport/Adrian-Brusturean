@@ -181,7 +181,7 @@ ${body}
         </ul>
       </div>
     </div>
-    <div class="footer-bottom"><span>© 2026 ANADRI CONSULTING SRL</span><span>Alle Preise sind unverbindliche Richtpreise für die Arbeitsleistung.</span></div>
+    <div class="footer-bottom"><span>© 2026 ANADRI CONSULTING RO SRL</span><span>Alle Preise sind unverbindliche Richtpreise für die Arbeitsleistung.</span></div>
   </div>
 </footer>
 ${scripts.map(s => `<script src="${r}assets/${s}"></script>`).join('\n')}
@@ -445,7 +445,7 @@ pages['uber-uns/index.html'] = layout({
   body: `${pageHead({ crumbs: '<a href="../">Startseite</a> / Über uns', h1: 'Über ANADRI', lead: 'Wir renovieren Wohnungen und Häuser in Österreich – mit klaren Preisen, einem festen Ansprechpartner und sauberer Arbeit.' })}
   <div class="container">
     <div class="card" style="max-width:860px">
-      <p style="margin-top:0">ANADRI CONSULTING SRL ist ein Bauunternehmen mit Sitz in Biled (Kreis Timiș, Rumänien) und führt Renovierungs- und Ausbauarbeiten in Österreich aus. Vom Abbruch bis zum letzten Anstrich koordinieren wir alle Gewerke, damit Sie sich um nichts kümmern müssen.</p>
+      <p style="margin-top:0">ANADRI CONSULTING RO SRL ist ein 2014 gegründetes Bauunternehmen mit Sitz in Biled (Kreis Timiș, Rumänien) und führt Renovierungs- und Ausbauarbeiten in Österreich aus. Vom Abbruch bis zum letzten Anstrich koordinieren wir alle Gewerke, damit Sie sich um nichts kümmern müssen.</p>
       <p style="margin-bottom:0">Unser Preisrechner zeigt Ihnen schon vor dem ersten Gespräch, mit welchen Kosten Sie rechnen können. Nach der kostenlosen Besichtigung erhalten Sie ein schriftliches Angebot – ohne versteckte Positionen.</p>
     </div>
     <section class="section" aria-labelledby="werte-title">
@@ -532,15 +532,15 @@ function mapBlock() {
 pages['impressum/index.html'] = layout({
   depth: 1, active: '', noindex: true,
   title: 'Impressum | ANADRI',
-  description: 'Impressum und Offenlegung der ANADRI CONSULTING SRL.',
+  description: 'Impressum und Offenlegung der ANADRI CONSULTING RO SRL.',
   body: `${pageHead({ crumbs: '<a href="../">Startseite</a> / Impressum', h1: 'Impressum' })}
   <div class="container">
     <div class="card legal">
       <p style="margin-top:0"><strong>Informationen gemäß § 5 E-Commerce-Gesetz und Offenlegung gemäß § 25 Mediengesetz</strong></p>
       <h2>Unternehmen</h2>
-      <p>ANADRI CONSULTING SRL<br>Sat Biled, Nr. 404<br>307060 Biled, Kreis Timiș, Rumänien</p>
+      <p>ANADRI CONSULTING RO SRL<br>Sat Biled, Nr. 404<br>307060 Biled, Kreis Timiș, Rumänien</p>
       <h2>Registerdaten</h2>
-      <p>Steuernummer (CUI): 3272443<br>Handelsregister (ONRC): <span class="todo">folgt</span><br>UID-Nummer: <span class="todo">folgt</span></p>
+      <p>Steuernummer (CUI): 32724443<br>Handelsregister (ONRC): J35/196/2014<br>EUID: ROONRC.J35/196/2014<br>Gegründet: 30.01.2014<br>UID-Nummer: <span class="todo">folgt</span></p>
       <h2>Kontakt</h2>
       <p>E-Mail: <a href="mailto:${EMAIL}">${EMAIL}</a><br>Telefon: <span class="todo">folgt</span></p>
       <h2>Unternehmensgegenstand</h2>
@@ -556,12 +556,12 @@ pages['impressum/index.html'] = layout({
 pages['datenschutz/index.html'] = layout({
   depth: 1, active: '', noindex: true,
   title: 'Datenschutzerklärung | ANADRI',
-  description: 'Datenschutzerklärung der ANADRI CONSULTING SRL.',
+  description: 'Datenschutzerklärung der ANADRI CONSULTING RO SRL.',
   body: `${pageHead({ crumbs: '<a href="../">Startseite</a> / Datenschutz', h1: 'Datenschutzerklärung', lead: 'Stand: 6. Oktober 2026' })}
   <div class="container">
     <div class="card legal">
       <h2 style="margin-top:0">Verantwortlicher</h2>
-      <p>ANADRI CONSULTING SRL, CUI 3272443, Sat Biled, Nr. 404, 307060 Biled, Kreis Timiș, Rumänien. E-Mail: <a href="mailto:${EMAIL}">${EMAIL}</a>.</p>
+      <p>ANADRI CONSULTING RO SRL, CUI 32724443, Handelsregister J35/196/2014, Sat Biled, Nr. 404, 307060 Biled, Kreis Timiș, Rumänien. E-Mail: <a href="mailto:${EMAIL}">${EMAIL}</a>.</p>
       <h2>Welche Daten wir verarbeiten</h2>
       <p>Nur die Angaben, die Sie uns über die Formulare oder per E-Mail senden: Name, Telefonnummer, E-Mail-Adresse, Ort des Objekts, Ihre Nachricht sowie – beim Preisrechner – die gewählten Leistungen, Flächen und die berechnete Schätzung.</p>
       <p>Der Preisrechner selbst rechnet in Ihrem Browser. Solange Sie das Formular nicht absenden, werden keine Eingaben an uns übertragen.</p>
