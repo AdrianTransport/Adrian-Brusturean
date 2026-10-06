@@ -494,3 +494,18 @@ main > .section{padding:40px 0}
   .hero--video .hero__text{padding:20px 18px;border-radius:12px}
 }
 @media(min-width:1024px){ .hero--video .hero__text{padding:34px 32px} }
+
+/* ---------- Zone deservite ---------- */
+.zone-grid{display:grid;gap:16px}
+.zone-col h2,.zone-col h3{margin:0 0 10px;font-size:1.15em;color:var(--navy);border:0;padding:0}
+.zone-col h2 a,.zone-col h3 a{color:var(--navy);text-decoration:none}
+.zone-col h2 a:hover,.zone-col h3 a:hover{color:var(--accent-dark)}
+.zone-col h2 small{font-weight:400;color:var(--muted);font-size:.8em;margin-left:6px}
+.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.chips a{display:inline-block;background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:.9em;color:var(--navy);text-decoration:none;font-weight:600}
+.chips a:hover{border-color:var(--accent);background:#fff8ec}
+.chips .chips__more{background:var(--navy);color:#fff;border-color:var(--navy)}
+.checks li a{color:var(--navy);text-decoration:none}
+.checks li a:hover{color:var(--accent-dark)}
+.checks .muted{display:block;font-size:.85em;color:var(--muted)}
+@media(min-width:768px){ .zone-grid{grid-template-columns:1fr 1fr;gap:24px} }

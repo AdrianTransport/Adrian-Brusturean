@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /at/assets/hero-images/Renovari/
+
+Sitemap: https://adrianbrusturean.netlify.app/sitemap.xml

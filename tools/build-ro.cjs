@@ -50,8 +50,15 @@ const NAV = [
   { key: 'calculator', href: 'calculator/', label: 'Calculator' },
   { key: 'lucrari', href: '#lucrari', label: 'Lucrări' },
   { key: 'cum', href: '#cum-lucram', label: 'Cum lucrăm' },
+  { key: 'zone', href: 'zone/', label: 'Zone' },
   { key: 'contact', href: '#contact', label: 'Contact' }
 ];
+
+// Localități deservite (Timiș și Arad) – pagini locale + sitemap
+const LOC = JSON.parse(fs.readFileSync(path.join(__dirname, 'localitati.json'), 'utf8'));
+const LOCALITATI = LOC.localitati;
+const JUDETE = LOC.judete;
+const byJudet = j => LOCALITATI.filter(l => l.judet === j);
 
 const STEPS = [
   ['Estimare online', 'Alegi lucrările în calculator și vezi pe loc prețul orientativ, în lei.'],
@@ -142,6 +149,7 @@ ${body}
         <ul>
           <li><a href="${home}#cum-lucram">Cum lucrăm</a></li>
           <li><a href="${home}#lucrari">Lucrări realizate</a></li>
+          <li><a href="${r}zone/">Zone deservite: Timiș și Arad</a></li>
           <li><a href="${home}#contact">Contact</a></li>
           <li><a href="${r}politica-confidentialitate.html">Politica de confidențialitate</a></li>
           <li><a href="${r}politica-cookies.html">Politica de cookies</a></li>
@@ -298,7 +306,25 @@ pages['index.html'] = layout({
     </div>
   </section>
 
-  <section class="section--white" id="contact" aria-labelledby="contact-title">
+  <section class="section--white" id="zone" aria-labelledby="zone-title">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title" id="zone-title">Lucrăm în Timiș și Arad</h2>
+          <p class="section-sub">Sediul e în Biled, la 27 km de Timișoara și la o oră de Arad. Vizita la fața locului e gratuită în ambele județe.</p>
+        </div>
+        <a class="btn btn--ghost" href="./zone/">Toate localitățile</a>
+      </div>
+      <div class="zone-grid">${['timis', 'arad'].map(j => `
+        <div class="zone-col">
+          <h3><a href="./zone/${j}/">Județul ${esc(JUDETE[j].nume)}</a></h3>
+          <ul class="chips">${byJudet(j).slice(0, 12).map(l => `<li><a href="./zone/${j}/${l.slug}/">${esc(l.nume)}</a></li>`).join('')}<li><a class="chips__more" href="./zone/${j}/">+ încă ${byJudet(j).length - 12}</a></li></ul>
+        </div>`).join('')}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" aria-labelledby="contact-title">
     <div class="container">
       <div class="section-head">
         <div>
@@ -413,9 +439,162 @@ pages['calculator/index.html'] = layout({
   </div>`
 });
 
+// ---------- Pagini locale: /zone/, /zone/<judet>/, /zone/<judet>/<localitate>/ ----------
+const PROFIL = {
+  metropola: {
+    titlu: 'Apartamente, case și vile',
+    text: l => `În ${l.nume} lucrăm atât la apartamente în blocuri (renovare completă, instalații noi, băi, gips-carton, zugrăveli), cât și la case: de la construcție la roșu pe loturile noi de la marginea orașului până la mansardări și termosistem la casele mai vechi.`,
+    lucrari: ['renovare', 'electrice', 'sanitare', 'finisaje', 'zugraveli', 'casa-cheie', 'termosistem']
+  },
+  periurban: {
+    titlu: 'Case noi pentru familii',
+    text: l => `${l.nume} e o zonă în care se construiește mult. Ridicăm case la roșu, la gri sau la cheie pe loturi noi, facem extinderi și mansardări la casele de după 2000 și termosistem la cele mai vechi. Fiind aproape de Biled, echipa ajunge repede, iar șantierul e urmărit zilnic.`,
+    lucrari: ['casa-rosu', 'casa-gri', 'casa-cheie', 'acoperis', 'termosistem', 'finisaje']
+  },
+  oras: {
+    titlu: 'Renovări și case de oraș',
+    text: l => `În ${l.nume} cererea e mai ales pentru renovarea caselor vechi de cărămidă și a apartamentelor: acoperișuri noi, termosistem pe fațadă, instalații electrice și sanitare refăcute, băi și finisaje. Construim și case noi, de la fundație la cheie.`,
+    lucrari: ['renovare', 'acoperis', 'termosistem', 'electrice', 'sanitare', 'casa-cheie']
+  },
+  rural: {
+    titlu: 'Case de sat renovate temeinic',
+    text: l => `În ${l.nume} lucrăm cel mai des la casele tradiționale de cărămidă: schimbăm acoperișul și șarpanta, punem termosistem, refacem instalațiile și băile, turnăm șape și montăm finisaje noi. Păstrăm ce e solid și înlocuim ce nu mai ține.`,
+    lucrari: ['acoperis', 'termosistem', 'renovare', 'sanitare', 'electrice', 'zugraveli']
+  }
+};
+const svcById = Object.fromEntries(LIST.map(s => [s.id, s]));
+const minute = km => Math.max(5, Math.round(km / 55 * 60 / 5) * 5);
+const distText = l => l.km === 0 ? 'Sediul nostru este chiar în ' + l.nume + '.' : `${l.nume} se află la aproximativ ${l.km} km de sediul nostru din Biled – cam ${minute(l.km)} minute cu mașina.`;
+const tipArt = l => l.tip === 'municipiu' ? 'municipiul' : l.tip === 'oraș' ? 'orașul' : 'comuna';
+const vecini = l => byJudet(l.judet).filter(o => o.slug !== l.slug).map(o => ({ o, d: Math.abs(o.km - l.km) + (o.profil === l.profil ? 0 : 8) })).sort((a, b) => a.d - b.d).slice(0, 6).map(x => x.o);
+
+function locPage(l) {
+  const J = JUDETE[l.judet], P = PROFIL[l.profil];
+  const lucrari = P.lucrari.map(id => svcById[id]).filter(Boolean);
+  const url = `zone/${l.judet}/${l.slug}/`;
+  const title = `Construcții și renovări în ${l.nume}, jud. ${J.nume} – prețuri în lei/m² | ANADRI`;
+  const description = `Construcții de case (roșu, gri, la cheie), renovări, acoperișuri și termosistem în ${l.nume}, județul ${J.nume}. Prețuri orientative în lei pe m², vizită gratuită la fața locului.`;
+  const ld = [
+    { '@context': 'https://schema.org', '@type': 'Service', name: `Construcții și renovări în ${l.nume}`, serviceType: 'Construcții și renovări', provider: { '@type': 'HomeAndConstructionBusiness', name: 'ANADRI Construcții', url: SITE_URL + '/ro/' }, areaServed: { '@type': l.tip === 'comună' ? 'AdministrativeArea' : 'City', name: l.nume, containedInPlace: { '@type': 'AdministrativeArea', name: 'Județul ' + J.nume } }, url: `${SITE_URL}/ro/${url}` },
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Acasă', item: SITE_URL + '/ro/' },
+      { '@type': 'ListItem', position: 2, name: 'Zone', item: SITE_URL + '/ro/zone/' },
+      { '@type': 'ListItem', position: 3, name: 'Județul ' + J.nume, item: `${SITE_URL}/ro/zone/${l.judet}/` },
+      { '@type': 'ListItem', position: 4, name: l.nume, item: `${SITE_URL}/ro/${url}` }] }
+  ];
+  return layout({
+    depth: 3, active: 'zone', pagePath: url, title, description,
+    body: `<div class="container page-head">
+    <nav class="crumbs" aria-label="Cale"><a href="../../../">Acasă</a> / <a href="../../">Zone</a> / <a href="../">Județul ${esc(J.nume)}</a> / ${esc(l.nume)}</nav>
+    <h1>Construcții și renovări în ${esc(l.nume)}</h1>
+    <p class="lead">${esc(distText(l))} Construim case de la roșu la cheie, renovăm și facem acoperișuri în ${tipArt(l)} ${esc(l.nume)} și în satele din jur – cu preț clar pe metru pătrat și vizită gratuită.</p>
+  </div>
+  <div class="container">
+    <div class="layout">
+      <article class="card">
+        <section>
+          <h2>${esc(P.titlu)}</h2>
+          <p>${esc(P.text(l))}</p>
+          <p class="note">${esc(l.nota)}</p>
+        </section>
+        <section>
+          <h2>Ce facem cel mai des în ${esc(l.nume)}</h2>
+          <ul class="checks">${lucrari.map(s => `<li><a href="../../../calculator/?serviciu=${s.id}#rezultat"><b>${esc(s.name)}</b></a> – ${esc(s.desc)}. <span class="muted">${nf.format(s.min)}–${nf.format(s.max)} lei/m² manoperă</span></li>`).join('')}</ul>
+        </section>
+        <section>
+          <h2>Întrebări frecvente – ${esc(l.nume)}</h2>
+          <div class="faq">
+            <details><summary>Veniți gratuit la vizită în ${esc(l.nume)}?</summary><p>Da. ${esc(distText(l))} Vizita și măsurătorile sunt gratuite în tot județul ${esc(J.nume)}, fără obligații.</p></details>
+            <details><summary>Cât costă manopera pentru o casă nouă în ${esc(l.nume)}?</summary><p>Orientativ: la roșu ${nf.format(svcById['casa-rosu'].min)}–${nf.format(svcById['casa-rosu'].max)} lei/m², la gri ${nf.format(svcById['casa-gri'].min)}–${nf.format(svcById['casa-gri'].max)} lei/m², la cheie ${nf.format(svcById['casa-cheie'].min)}–${nf.format(svcById['casa-cheie'].max)} lei/m² (manoperă, fără materiale și TVA). Prețul ferm îl primești în oferta scrisă, după vizită.</p></details>
+            <details><summary>Lucrați și în satele de lângă ${esc(l.nume)}?</summary><p>Da, lucrăm în toată zona: ${vecini(l).map(o => esc(o.nume)).join(', ')} și restul județului ${esc(J.nume)}.</p></details>
+          </div>
+        </section>
+      </article>
+      <aside class="calc">
+        <div class="calc__head"><div class="calc__label">Estimare rapidă</div><span class="badge">Orientativ</span></div>
+        <p class="calc__top">Prețuri pentru manoperă, în lei/m², valabile și în ${esc(l.nume)}.</p>
+        <dl class="info-list">${lucrari.slice(0, 4).map(s => `<div><dt>${esc(s.name)}</dt><dd>${nf.format(s.min)}–${nf.format(s.max)} lei/m²</dd></div>`).join('')}</dl>
+        <p class="calc__disclaimer" style="margin-top:18px">Alege lucrările și suprafața, vezi totalul pe loc și trimite-ni-l.</p>
+        <a class="cta" href="../../../calculator/">Calculează prețul pentru ${esc(l.nume)}</a>
+        <a class="calc__more" href="../../../#contact">Sau cere direct o vizită gratuită →</a>
+      </aside>
+    </div>
+
+    <section class="section" aria-labelledby="vecini-title">
+      <h2 class="section-title" id="vecini-title">Localități apropiate</h2>
+      <div class="tiles">${vecini(l).map(o => `<a class="tile" href="../${o.slug}/">${esc(o.nume)} <span>${o.tip} · ~${o.km} km de Biled</span></a>`).join('')}</div>
+    </section>
+    ${ctaBand('../../../')}
+  </div>
+  <script type="application/ld+json">${JSON.stringify(ld)}</script>`
+  });
+}
+
+function judetPage(j) {
+  const J = JUDETE[j], list = byJudet(j);
+  const grupuri = [['municipiu', 'Municipii'], ['oraș', 'Orașe'], ['comună', 'Comune']].map(([tip, label]) => [label, list.filter(l => l.tip === tip)]).filter(g => g[1].length);
+  return layout({
+    depth: 2, active: 'zone', pagePath: `zone/${j}/`,
+    title: `Construcții și renovări în județul ${J.nume} – ${list.length} localități | ANADRI`,
+    description: `Construim și renovăm case în ${list.length} localități din județul ${J.nume}: ${list.slice(0, 6).map(l => l.nume).join(', ')} și altele. Prețuri în lei/m², vizită gratuită.`,
+    body: `<div class="container page-head">
+    <nav class="crumbs" aria-label="Cale"><a href="../../">Acasă</a> / <a href="../">Zone</a> / Județul ${esc(J.nume)}</nav>
+    <h1>Construcții și renovări în județul ${esc(J.nume)}</h1>
+    <p class="lead">${j === 'timis' ? 'Suntem din Biled, în inima județului, la 27 km de Timișoara.' : 'Din Biled ajungem în Arad într-o oră, iar în comunele de pe Mureș și mai repede.'} Alege localitatea ta pentru detalii, prețuri și specificul lucrărilor din zonă.</p>
+  </div>
+  <div class="container">
+    ${grupuri.map(([label, ls]) => `<section class="section" style="padding-top:8px"><h2 class="section-title">${label}</h2><div class="tiles">${ls.sort((a, b) => a.km - b.km).map(l => `<a class="tile" href="${l.slug}/">${esc(l.nume)} <span>~${l.km} km de Biled</span></a>`).join('')}</div></section>`).join('')}
+    ${ctaBand('../../')}
+  </div>`
+  });
+}
+
+pages['zone/index.html'] = layout({
+  depth: 1, active: 'zone', pagePath: 'zone/',
+  title: `Zone deservite – construcții și renovări în Timiș și Arad (${LOCALITATI.length} localități) | ANADRI`,
+  description: `ANADRI construiește și renovează case în ${LOCALITATI.length} localități din județele Timiș și Arad. Sediul în Biled, vizită gratuită în ambele județe.`,
+  body: `<div class="container page-head">
+    <nav class="crumbs" aria-label="Cale"><a href="../">Acasă</a> / Zone</nav>
+    <h1>Unde lucrăm: Timiș și Arad</h1>
+    <p class="lead">Sediul nostru e în Biled, județul Timiș. Lucrăm în toată zona de câmpie dintre Timișoara și Arad, la granița cu Ungaria și Serbia, și până la dealurile din est. Vizita la fața locului e gratuită în ambele județe.</p>
+  </div>
+  <div class="container">
+    <div class="zone-grid">${['timis', 'arad'].map(j => `
+      <div class="zone-col card">
+        <h2><a href="${j}/">Județul ${esc(JUDETE[j].nume)}</a> <small>${byJudet(j).length} localități</small></h2>
+        <ul class="chips">${byJudet(j).sort((a, b) => a.km - b.km).map(l => `<li><a href="${j}/${l.slug}/">${esc(l.nume)}</a></li>`).join('')}</ul>
+      </div>`).join('')}
+    </div>
+    ${ctaBand('../')}
+  </div>`
+});
+for (const j of Object.keys(JUDETE)) pages[`zone/${j}/index.html`] = judetPage(j);
+for (const l of LOCALITATI) pages[`zone/${l.judet}/${l.slug}/index.html`] = locPage(l);
+
 for (const [file, html] of Object.entries(pages)) {
   const out = path.join(RO, file);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);
-  console.log('ro/' + file);
 }
+console.log(Object.keys(pages).length + ' pagini RO scrise');
+
+// ---------- sitemap.xml + robots.txt (rădăcina site-ului) ----------
+const today = new Date().toISOString().slice(0, 10);
+const urls = [];
+const add = (loc, priority, changefreq = 'monthly') => urls.push({ loc, priority, changefreq });
+add(`${SITE_URL}/`, '0.5');
+add(`${SITE_URL}/ro/`, '1.0', 'weekly');
+add(`${SITE_URL}/ro/calculator/`, '0.9', 'monthly');
+add(`${SITE_URL}/ro/zone/`, '0.8');
+for (const j of Object.keys(JUDETE)) add(`${SITE_URL}/ro/zone/${j}/`, '0.7');
+for (const l of LOCALITATI) add(`${SITE_URL}/ro/zone/${l.judet}/${l.slug}/`, '0.6');
+add(`${SITE_URL}/ro/politica-confidentialitate.html`, '0.2', 'yearly');
+add(`${SITE_URL}/ro/politica-cookies.html`, '0.2', 'yearly');
+// paginile germane existente (același host)
+const AT = path.join(ROOT, 'at');
+const walkAt = (dir, rel = '') => { for (const f of fs.readdirSync(dir)) { const p = path.join(dir, f); if (fs.statSync(p).isDirectory()) walkAt(p, rel + f + '/'); else if (f === 'index.html' && !/impressum|datenschutz/.test(rel)) add(`${SITE_URL}/at/${rel}`, rel === '' ? '0.9' : '0.6'); } };
+if (fs.existsSync(AT)) walkAt(AT);
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${u.loc}</loc><lastmod>${today}</lastmod><changefreq>${u.changefreq}</changefreq><priority>${u.priority}</priority></url>`).join('\n')}\n</urlset>\n`;
+fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), sitemap);
+fs.writeFileSync(path.join(ROOT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /at/assets/hero-images/Renovari/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+console.log(`sitemap.xml: ${urls.length} URL-uri · robots.txt scris`);
