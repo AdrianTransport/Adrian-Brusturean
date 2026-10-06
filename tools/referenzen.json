@@ -1,0 +1,35 @@
+[
+  {
+    "id": "beispiel-wohnung-wien",
+    "platzhalter": true,
+    "titel": "Komplettrenovierung einer Altbauwohnung",
+    "ort": "Wien",
+    "jahr": "2026",
+    "flaeche": "85 m²",
+    "leistungen": ["abbruch-entsorgung", "innenrenovierung", "elektroinstallation", "maler-anstrich"],
+    "text": "Platzhalter: Hier steht die Beschreibung eines echten Projekts – Ausgangslage, was gemacht wurde und das Ergebnis.",
+    "bilder": []
+  },
+  {
+    "id": "beispiel-fassade",
+    "platzhalter": true,
+    "titel": "Fassadendämmung eines Einfamilienhauses",
+    "ort": "Niederösterreich",
+    "jahr": "2026",
+    "flaeche": "180 m²",
+    "leistungen": ["fassade-waermedaemmung"],
+    "text": "Platzhalter: Wärmedämmverbundsystem, Armierung, Oberputz und Anstrich. Wird durch ein echtes Projekt ersetzt.",
+    "bilder": []
+  },
+  {
+    "id": "beispiel-bad",
+    "platzhalter": true,
+    "titel": "Badsanierung mit neuen Fliesen",
+    "ort": "Wien",
+    "jahr": "2026",
+    "flaeche": "9 m²",
+    "leistungen": ["wasser-sanitaer", "fliesen-bodenbelag"],
+    "text": "Platzhalter: Neue Leitungen, Vorwandinstallation, Abdichtung und großformatige Fliesen. Wird durch ein echtes Projekt ersetzt.",
+    "bilder": []
+  }
+]
